@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WD.SQLServer", "WD.SQLServer\WD.SQLServer.sqlproj", "{D8A6DA09-7ED9-42BB-A22C-C0B08AF20203}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WD.Web", "WD.Web\WD.Web.csproj", "{31120F60-DF1F-4890-8AB9-FDE7C890800E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WD.Data", "WD.Data\WD.Data.csproj", "{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{D8A6DA09-7ED9-42BB-A22C-C0B08AF20203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8A6DA09-7ED9-42BB-A22C-C0B08AF20203}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8A6DA09-7ED9-42BB-A22C-C0B08AF20203}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{31120F60-DF1F-4890-8AB9-FDE7C890800E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31120F60-DF1F-4890-8AB9-FDE7C890800E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31120F60-DF1F-4890-8AB9-FDE7C890800E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31120F60-DF1F-4890-8AB9-FDE7C890800E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

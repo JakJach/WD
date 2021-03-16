@@ -1,0 +1,12 @@
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\bin\Debug\net5.0\WD.Data.deps.json
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\bin\Debug\net5.0\WD.Data.dll
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\bin\Debug\net5.0\ref\WD.Data.dll
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\bin\Debug\net5.0\WD.Data.pdb
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.csprojAssemblyReference.cache
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.AssemblyInfoInputs.cache
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.AssemblyInfo.cs
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.csproj.CoreCompileInputs.cache
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.dll
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\ref\WD.Data.dll
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.pdb
