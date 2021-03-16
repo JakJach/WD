@@ -10,3 +10,6 @@ C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.csproj
 C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.dll
 C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\ref\WD.Data.dll
 C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.pdb
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\bin\Debug\net5.0\WD.SQLServer.dll
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\bin\Debug\net5.0\WD.SQLServer.pdb
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Data\obj\Debug\net5.0\WD.Data.csproj.CopyComplete

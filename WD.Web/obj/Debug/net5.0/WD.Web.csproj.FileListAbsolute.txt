@@ -38,3 +38,5 @@ C:\Users\Jakub Jachowicz\source\repos\WD\WD.Web\obj\Debug\net5.0\ref\WD.Web.dll
 C:\Users\Jakub Jachowicz\source\repos\WD\WD.Web\obj\Debug\net5.0\WD.Web.pdb
 C:\Users\Jakub Jachowicz\source\repos\WD\WD.Web\obj\Debug\net5.0\WD.Web.genruntimeconfig.cache
 C:\Users\Jakub Jachowicz\source\repos\WD\WD.Web\obj\Debug\net5.0\WD.Web.csproj.CopyComplete
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Web\bin\Debug\net5.0\WD.Data.dll
+C:\Users\Jakub Jachowicz\source\repos\WD\WD.Web\bin\Debug\net5.0\WD.Data.pdb

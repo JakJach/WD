@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "WD.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/WD.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WD.Data.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "WD.Data/1.0.0": {
+      "type": "project",
+      "path": "../WD.Data/WD.Data.csproj",
+      "msbuildProject": "../WD.Data/WD.Data.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "WD.Data >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Jakub Jachowicz\\.nuget\\packages\\": {}
@@ -33,7 +52,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj": {
+              "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
