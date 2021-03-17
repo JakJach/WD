@@ -8,19 +8,19 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\jakub\\.nuget\\packages\\": {}
+    "C:\\Users\\Sebastian\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jakub\\Source\\Repos\\WD\\WD.Data\\WD.Data.csproj",
+      "projectUniqueName": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj",
       "projectName": "WD.Data",
-      "projectPath": "C:\\Users\\jakub\\Source\\Repos\\WD\\WD.Data\\WD.Data.csproj",
-      "packagesPath": "C:\\Users\\jakub\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jakub\\Source\\Repos\\WD\\WD.Data\\obj\\",
+      "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj",
+      "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
+      "outputPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jakub\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -60,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   }
