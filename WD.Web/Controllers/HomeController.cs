@@ -4,10 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using VD.Data.Models;
-using VD.Data.Services;
-using VD.Web.Models;
-using VD.Web.ViewModels;
+using WD.Web.Models;
 
 namespace VD.Web.Controllers
 {
