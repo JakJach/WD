@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using WD.Data.Models;
-using WD.Data.Models.Representation;
 
 namespace WD.Web.ViewModels
 {
