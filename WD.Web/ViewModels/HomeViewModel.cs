@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WD.Web.ViewModels
+namespace WD.Web.Models
 {
     public class HomeViewModel
     {

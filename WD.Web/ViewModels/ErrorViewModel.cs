@@ -1,4 +1,4 @@
-namespace WD.Web.ViewModels
+namespace WD.Web.Models
 {
     public class ErrorViewModel
     {

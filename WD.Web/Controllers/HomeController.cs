@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using WD.Data.Models;
 using WD.Data.Services;
-using WD.Web.ViewModels;
+using WD.Web.Models;
 
 namespace VD.Web.Controllers
 {
