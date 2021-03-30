@@ -1,32 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web.Tests\\WD.Web.Tests.csproj": {}
+    "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web.Tests\\WD.Web.Tests.csproj": {}
   },
   "projects": {
-    "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj": {
+    "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj",
+        "projectUniqueName": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj",
         "projectName": "WD.Data",
-        "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj",
-        "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
-        "outputPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\obj\\",
+        "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj",
+        "packagesPath": "C:\\Users\\Jakub Jachowicz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jakub Jachowicz\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,8 +37,8 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -54,21 +54,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web.Tests\\WD.Web.Tests.csproj": {
+    "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web.Tests\\WD.Web.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web.Tests\\WD.Web.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web.Tests\\WD.Web.Tests.csproj",
         "projectName": "WD.Web.Tests",
-        "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web.Tests\\WD.Web.Tests.csproj",
-        "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
-        "outputPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web.Tests\\obj\\",
+        "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web.Tests\\WD.Web.Tests.csproj",
+        "packagesPath": "C:\\Users\\Jakub Jachowicz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jakub Jachowicz\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,8 +82,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web\\WD.Web.csproj": {
-                "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web\\WD.Web.csproj"
+              "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web\\WD.Web.csproj": {
+                "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web\\WD.Web.csproj"
               }
             }
           }
@@ -130,36 +130,36 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web\\WD.Web.csproj": {
+    "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web\\WD.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web\\WD.Web.csproj",
+        "projectUniqueName": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web\\WD.Web.csproj",
         "projectName": "WD.Web",
-        "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web\\WD.Web.csproj",
-        "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
-        "outputPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web\\obj\\",
+        "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web\\WD.Web.csproj",
+        "packagesPath": "C:\\Users\\Jakub Jachowicz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jakub Jachowicz\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj": {
-                "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj"
+              "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj": {
+                "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj"
               }
             }
           }
@@ -171,8 +171,8 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -191,7 +191,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,38 +1,38 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    ".NETCoreApp,Version=v3.1": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
-    "net5.0": []
+    ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Sebastian\\.nuget\\packages\\": {}
+    "C:\\Users\\Jakub Jachowicz\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj",
+      "projectUniqueName": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj",
       "projectName": "WD.Data",
-      "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\WD.Data.csproj",
-      "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
-      "outputPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Data\\obj\\",
+      "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\WD.Data.csproj",
+      "packagesPath": "C:\\Users\\Jakub Jachowicz\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jakub Jachowicz\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net5.0"
+        "netcoreapp3.1"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -43,8 +43,8 @@
       }
     },
     "frameworks": {
-      "net5.0": {
-        "targetAlias": "net5.0",
+      "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "imports": [
           "net461",
           "net462",
@@ -60,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

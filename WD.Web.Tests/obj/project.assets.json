@@ -1635,15 +1635,31 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
+      "WD.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/WD.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WD.Data.dll": {}
+        }
+      },
       "WD.Web/1.0.0": {
         "type": "project",
-        "framework": "Unsupported,Version=v0.0",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "WD.Data": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/WD.Web.dll": {}
         },
         "runtime": {
           "bin/placeholder/WD.Web.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -5717,6 +5733,11 @@
         "system.xml.xdocument.nuspec"
       ]
     },
+    "WD.Data/1.0.0": {
+      "type": "project",
+      "path": "../WD.Data/WD.Data.csproj",
+      "msbuildProject": "../WD.Data/WD.Data.csproj"
+    },
     "WD.Web/1.0.0": {
       "type": "project",
       "path": "../WD.Web/WD.Web.csproj",
@@ -5733,19 +5754,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Sebastian\\.nuget\\packages\\": {}
+    "C:\\Users\\Jakub Jachowicz\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web.Tests\\WD.Web.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web.Tests\\WD.Web.Tests.csproj",
       "projectName": "WD.Web.Tests",
-      "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web.Tests\\WD.Web.Tests.csproj",
-      "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
-      "outputPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web.Tests\\obj\\",
+      "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web.Tests\\WD.Web.Tests.csproj",
+      "packagesPath": "C:\\Users\\Jakub Jachowicz\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jakub Jachowicz\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5759,8 +5780,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web\\WD.Web.csproj": {
-              "projectPath": "D:\\Dokumenty\\Studia\\Laboratorium Specjalizacyjne\\WD.Web\\WD.Web.csproj"
+            "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web\\WD.Web.csproj": {
+              "projectPath": "C:\\Users\\Jakub Jachowicz\\source\\repos\\WD\\WD.Web\\WD.Web.csproj"
             }
           }
         }
@@ -5807,19 +5828,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1201",
-      "level": "Error",
-      "message": "Projekt WD.Web nie jest zgodny z elementem netcoreapp3.1 (.NETCoreApp,Version=v3.1). Projekt WD.Web obsługuje: net5.0 (.NETCoreApp,Version=v5.0)",
-      "libraryId": "WD.Web",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }
