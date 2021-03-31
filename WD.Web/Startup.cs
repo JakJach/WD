@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using WD.Data.Models;
+using WD.Data.Services;
+using WD.Web.Models;
 
 namespace WD.Web
 {
@@ -24,6 +26,48 @@ namespace WD.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddScoped<IWDRepository, WDRepository>();
+            services.AddScoped<IUser, User>();
+
+            //downloading files
+            services.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
+            //Classes context
+            services.AddEntityFrameworkNpgsql().AddDbContextPool<ClassesContext>(opt =>
+               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+
+            //Project context
+            services.AddEntityFrameworkNpgsql().AddDbContextPool<ProjectContext>(opt =>
+               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+
+            //Student context
+            services.AddEntityFrameworkNpgsql().AddDbContextPool<StudentContext>(opt =>
+               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+
+            //Teacher context
+            services.AddEntityFrameworkNpgsql().AddDbContextPool<TeacherContext>(opt =>
+               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+
+            //Thesis context
+            services.AddEntityFrameworkNpgsql().AddDbContextPool<ThesisContext>(opt =>
+               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+
+            //User context
+            services.AddEntityFrameworkNpgsql().AddDbContextPool<UserContext>(opt =>
+                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+
+            //Login services
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 0;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<UserContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
