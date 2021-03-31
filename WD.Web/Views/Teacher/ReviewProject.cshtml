@@ -1,0 +1,73 @@
+﻿@model TeacherReviewProjectViewModel
+@{
+    ViewData["Title"] = "Wirtualny Dziekanat";
+}
+
+<div class="container-fluid">
+    <div>
+        <p class="text-dark">Formularz oceny projektu zaliczeniowego z przedmiotu:</p>
+        <h5 class="text-center text-dark">@Model.ClassesName</h5>
+    </div>
+    <div>
+        <p class="text-dark">Tytuł projektu:</p>
+        <h3 class="text-dark text-center">@Model.Title</h3>
+    </div>
+    <div>
+        <p class="text-dark">Przygotowane przez:</p>
+        <ul class="list-group">
+            @foreach(Student student in Model.Students)
+            {
+                <li class="list-group-item">@(student.Name + " " + student.Surname)</li>
+            }
+        </ul>
+    </div>
+</div>
+<div class="container-fluid">
+    <div>
+        <p class="text-dark">Pliki projektu:</p>
+        <div class="row">
+            <label asp-for="FileName" class="text-dark col-2 custom-control-label">Plik główny:</label>
+            <div class="col-10">
+                <label class="text-dark">@Model.FileName</label>
+                <a class="btn btn-dark text-white" asp-controller="teacher" asp-action="download" asp-route-filename="@Model.FileName">Pobierz</a>
+            </div>
+        </div>
+        @if(Model.AttachmentNames != null)
+        {
+        <div class="row">
+            <label asp-for="AttachmentNames" class="text-dark col-2 custom-control-label">Załączniki:</label>
+            <div class="col-10">
+                @foreach (string filename in Model.AttachmentNames)
+                {
+                    <label class="text-dark">@filename</label>
+                    <a class="btn btn-dark text-white" asp-controller="teacher" asp-action="download" asp-route-filename="@filename">Pobierz</a>
+                }
+            </div>
+        </div>
+        }
+    </div>
+</div>
+<div class="container-fluid">
+    <div>
+        <p class="text-dark text-center"><br/>Oceń projekt<br/></p>
+    </div>
+    <form asp-controller="Teacher" asp-action="ReviewProject" method="post">
+        <div class="form-group form-row">
+            <label asp-for="Note" class="text-dark col-2 col-form-label">Ocena</label>
+            <div class="col-2">
+                <input type="text" asp-for="Note" class="form-control border-dark" required />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group form-row">
+            <label asp-for="Review" class="text-dark col-2 col-form-label">Opinia</label>
+            <div class="col-10">
+                <textarea asp-for="Review" class="form-control border-dark" required></textarea>
+                <span asp-validation-for="Review" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group align-content-center">
+            <input type="submit" name="submit" class="btn btn-dark" value="Oceń" />
+        </div>
+    </form>
+</div>
