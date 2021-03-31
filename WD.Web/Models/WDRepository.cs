@@ -5,7 +5,7 @@ using WD.Data.Services;
 
 namespace WD.Web.Models
 {
-    public class VDRepository : IVDRepository
+    public class WDRepository : IWDRepository
     {
         #region Fields
         private readonly ClassesContext _classesContext;
@@ -17,7 +17,7 @@ namespace WD.Web.Models
         #endregion
 
         #region Constructors
-        public VDRepository(ClassesContext classesContext, ProjectContext projectContext, StudentContext studentContext,
+        public WDRepository(ClassesContext classesContext, ProjectContext projectContext, StudentContext studentContext,
             TeacherContext teacherContext, ThesisContext thesisContext, UserContext userContext)
         {
             _classesContext = classesContext;

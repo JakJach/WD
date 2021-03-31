@@ -35,28 +35,28 @@ namespace WD.Web
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
             //Classes context
-            services.AddEntityFrameworkNpgsql().AddDbContextPool<ClassesContext>(opt =>
-               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+            services.AddDbContextPool<ClassesContext>(opt =>
+               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
 
             //Project context
-            services.AddEntityFrameworkNpgsql().AddDbContextPool<ProjectContext>(opt =>
-               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+            services.AddDbContextPool<ProjectContext>(opt =>
+               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
 
             //Student context
-            services.AddEntityFrameworkNpgsql().AddDbContextPool<StudentContext>(opt =>
-               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+            services.AddDbContextPool<StudentContext>(opt =>
+               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
 
             //Teacher context
-            services.AddEntityFrameworkNpgsql().AddDbContextPool<TeacherContext>(opt =>
-               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+            services.AddDbContextPool<TeacherContext>(opt =>
+               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
 
             //Thesis context
-            services.AddEntityFrameworkNpgsql().AddDbContextPool<ThesisContext>(opt =>
-               opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+            services.AddDbContextPool<ThesisContext>(opt =>
+               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
 
             //User context
-            services.AddEntityFrameworkNpgsql().AddDbContextPool<UserContext>(opt =>
-                opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+            services.AddDbContextPool<UserContext>(opt =>
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
 
             //Login services
             services.AddIdentity<IdentityUser, IdentityRole>(options =>

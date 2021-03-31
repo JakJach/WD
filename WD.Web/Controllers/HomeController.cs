@@ -13,7 +13,7 @@ namespace VD.Web.Controllers
     public class HomeController : Controller
     {
         #region Fields
-        private readonly IVDRepository _repository;
+        private readonly IWDRepository _repository;
         private readonly ILogger<HomeController> _logger;
         public IConfiguration Configuration { get; }
 
@@ -22,7 +22,7 @@ namespace VD.Web.Controllers
         #endregion
 
         #region Constructors
-        public HomeController(ILogger<HomeController> logger, IVDRepository repository,
+        public HomeController(ILogger<HomeController> logger, IWDRepository repository,
             IConfiguration configuration, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _logger = logger;

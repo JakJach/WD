@@ -3,7 +3,7 @@ using WD.Data.Models;
 
 namespace WD.Data.Services
 {
-    public interface IVDRepository
+    public interface IWDRepository
     {
         #region Classes
         IEnumerable<Classes> GetAllClasses { get; }
