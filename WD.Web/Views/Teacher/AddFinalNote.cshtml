@@ -1,0 +1,29 @@
+﻿@model TeacherAddFinalNoteViewModel
+@{
+    ViewData["Title"] = "Wirtualny Dziekanat";
+}
+
+<div class="container-fluid">
+    <div>
+        <p class="text-dark">Formularz oceny końcowej z przedmiotu:</p>
+        <h5 class="text-center text-dark">@Model.ClassesName</h5>
+    </div>
+    <div>
+        <p class="text-dark">Oceniany student:</p>
+        <h5 class="text-center text-dark">@(Model.Student.Name + " " + Model.Student.Surname)</h5>
+    </div>
+</div>
+<div class="container-fluid">
+    <form asp-controller="Teacher" asp-action="AddFinalNote" method="post">
+        <div class="form-group form-row">
+            <label asp-for="Note" class="text-dark col-2 col-form-label">Ocena końcowa</label>
+            <div class="col-2">
+                <input type="text" asp-for="Note" class="form-control border-dark" required />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group align-content-center">
+            <input type="submit" name="submit" class="btn btn-dark" value="Oceń" />
+        </div>
+    </form>
+</div>
