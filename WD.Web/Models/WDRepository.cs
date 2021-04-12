@@ -8,24 +8,14 @@ namespace WD.Web.Models
     public class WDRepository : IWDRepository
     {
         #region Fields
-        private readonly ClassesContext _classesContext;
-        private readonly ProjectContext _projectContext;
-        private readonly StudentContext _studentContext;
-        private readonly TeacherContext _teacherContext;
-        private readonly ThesisContext _thesisContext;
-        private readonly UserContext _userContext;
+        private readonly WDContext _context;
+
         #endregion
 
         #region Constructors
-        public WDRepository(ClassesContext classesContext, ProjectContext projectContext, StudentContext studentContext,
-            TeacherContext teacherContext, ThesisContext thesisContext, UserContext userContext)
+        public WDRepository(WDContext context)
         {
-            _classesContext = classesContext;
-            _projectContext = projectContext;
-            _studentContext = studentContext;
-            _teacherContext = teacherContext;
-            _thesisContext = thesisContext;
-            _userContext = userContext;
+            _context = context;
         }
         #endregion
 
@@ -34,7 +24,7 @@ namespace WD.Web.Models
         #region Classes
         public IEnumerable<Classes> GetAllClasses
         {
-            get { return _classesContext.Classes; }
+            get { return _context.Classes; }
         }
 
         public Classes GetClasses(int id)
@@ -61,7 +51,7 @@ namespace WD.Web.Models
         #region Projects
         public IEnumerable<Project> GetAllProjects
         {
-            get { return _projectContext.Projects; }
+            get { return _context.Projects; }
         }
 
         public Project GetProject(int id)
@@ -97,7 +87,7 @@ namespace WD.Web.Models
         #region Students
         public IEnumerable<Student> GetAllStudents
         {
-            get { return _studentContext.Students; }
+            get { return _context.Students; }
         }
 
         public Student GetStudent(int id)
@@ -114,7 +104,7 @@ namespace WD.Web.Models
         #region Teachers
         public IEnumerable<Teacher> GetAllTeachers
         {
-            get { return _teacherContext.Teachers; }
+            get { return _context.Teachers; }
         }
 
         public Teacher GetTeacher(int id)
@@ -131,7 +121,7 @@ namespace WD.Web.Models
         #region Theses
         public IEnumerable<Thesis> GetAllTheses
         {
-            get { return _thesisContext.Theses; }
+            get { return _context.Theses; }
         }
 
         public Thesis GetStudentThesis(Student student)
@@ -163,7 +153,7 @@ namespace WD.Web.Models
         #region Users
         public IEnumerable<User> GetAllUsers
         {
-            get { return _userContext.AllUsers; }
+            get { return _context.AllUsers; }
         }
 
         public User GetUser(string email)
@@ -177,43 +167,43 @@ namespace WD.Web.Models
         #region Updates
         public Classes UpdateClasses(Classes classes)
         {
-            _classesContext.Classes.Update(classes);
-            _classesContext.SaveChanges();
+            _context.Classes.Update(classes);
+            _context.SaveChanges();
             return classes;
         }
 
         public Project UpdateProject(Project project)
         {
-            _projectContext.Projects.Update(project);
-            _projectContext.SaveChanges();
+            _context.Projects.Update(project);
+            _context.SaveChanges();
             return project;
         }
 
         public Student UpdateStudent(Student student)
         {
-            _studentContext.Students.Update(student);
-            _studentContext.SaveChanges();
+            _context.Students.Update(student);
+            _context.SaveChanges();
             return student;
         }
 
         public Teacher UpdateTeacher(Teacher teacher)
         {
-            _teacherContext.Teachers.Update(teacher);
-            _teacherContext.SaveChanges();
+            _context.Teachers.Update(teacher);
+            _context.SaveChanges();
             return teacher;
         }
 
         public Thesis UpdateThesis(Thesis thesis)
         {
-            _thesisContext.Theses.Update(thesis);
-            _thesisContext.SaveChanges();
+            _context.Theses.Update(thesis);
+            _context.SaveChanges();
             return thesis;
         }
 
         public User UpdateUser(User user)
         {
-            _userContext.AllUsers.Update(user);
-            _userContext.SaveChanges();
+            _context.AllUsers.Update(user);
+            _context.SaveChanges();
             return user;
         }
         #endregion

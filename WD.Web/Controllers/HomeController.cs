@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WD.Data.Models;
@@ -46,22 +47,32 @@ namespace VD.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
-
-                if (result.Succeeded)
+                Microsoft.AspNetCore.Identity.SignInResult result;
+                try
                 {
-                    if (_repository.GetUser(model.Email).IsStudent)
+                    result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+                    if (result.Succeeded)
                     {
-                        Student student = _repository.GetStudent(model.Email);
-                        return RedirectToAction("index", "student", new { id = student.ID });
+                        if (_repository.GetUser(model.Email).IsStudent)
+                        {
+                            Student student = _repository.GetStudent(model.Email);
+                            return RedirectToAction("index", "student", new { id = student.ID });
+                        }
+                        else
+                        {
+                            Teacher teacher = _repository.GetTeacher(model.Email);
+                            return RedirectToAction("index", "teacher", new { id = teacher.ID });
+                        }
                     }
                     else
                     {
-                        Teacher teacher = _repository.GetTeacher(model.Email);
-                        return RedirectToAction("index", "teacher", new { id = teacher.ID });
+                        ModelState.AddModelError(string.Empty, "Nieudane logowanie");
                     }
                 }
-                ModelState.AddModelError(string.Empty, "Nieudane logowanie");
+                catch (Exception)
+                {
+                    ModelState.AddModelError(string.Empty, "Nie udało się połączyć z bazą danych");
+                }
             }
             return View(model);
         }

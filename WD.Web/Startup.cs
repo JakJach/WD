@@ -34,28 +34,8 @@ namespace WD.Web
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
-            //Classes context
-            services.AddDbContextPool<ClassesContext>(opt =>
-               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
-
-            //Project context
-            services.AddDbContextPool<ProjectContext>(opt =>
-               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
-
-            //Student context
-            services.AddDbContextPool<StudentContext>(opt =>
-               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
-
-            //Teacher context
-            services.AddDbContextPool<TeacherContext>(opt =>
-               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
-
-            //Thesis context
-            services.AddDbContextPool<ThesisContext>(opt =>
-               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
-
-            //User context
-            services.AddDbContextPool<UserContext>(opt =>
+            //Database context
+            services.AddDbContext<WDContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
 
             //Login services
@@ -67,7 +47,7 @@ namespace WD.Web
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<UserContext>();
+            }).AddEntityFrameworkStores<WDContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
