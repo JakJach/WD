@@ -1,0 +1,60 @@
+﻿@model StudentAddProjectViewModel
+@{
+    ViewData["Title"] = "Wirtualny Dziekanat";
+}
+
+<div class="container-fluid">
+    <div>
+        <p class="text-dark">Dodawanie plików projektu zaliczeniowego z przedmiotu:</p>
+        <h5 class="text-center text-dark">@Model.ClassesName</h5>
+    </div>
+    <div>
+        <p class="text-dark">Tytuł projektu:</p>
+        <h3 class="text-dark text-center">@Model.Title</h3>
+    </div>
+</div>
+<div class="container-fluid justify-content-center">
+    <form enctype="multipart/form-data" asp-controller="Student" asp-action="AddProject" method="post">
+        <div class="form-group row">
+            <label asp-for="File" class="col-4 col-form-label">Główny plik projektu:</label>
+            <div class="col-8">
+                <div class="custom-file">
+                    <input asp-for="File" class="form-control custom-file-input" accept=".xls,.xlsx,.doc,.docx,.pdf,.txt"/>
+                    <label class="custom-file-label">Wybierz plik</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Attachments" class="col-4 col-form-label">Załączniki:</label>
+            <div class="col-8">
+                <div class="custom-file">
+                    <input asp-for="Attachments" class="form-control custom-file-input" accept=".xls,.xlsx,.doc,.docx,.pdf,.txt" multiple />
+                    <label class="custom-file-label">Wybierz załączniki</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group align-self-center">
+            <input type="submit" name="submit" class="btn btn-dark" value="Dodaj" />
+        </div>
+
+        @section Scripts{
+            <script>
+                $(document).ready(function () {
+                    $('.custom-file-input').on("change", function () {
+                        var fileLabel = $(this).next('.custom-file-label');
+                        var files = $(this)[0].files;
+                        if (files.length > 1 && files.length < 5) {
+                            fileLabel.html('Wybrano ' + files.length + ' pliki');
+                        }
+                        else if (files.length >= 5) {
+                            fileLabel.html('Wybrano ' + files.length + ' plików');
+                        }
+                        else if (files.length == 1) {
+                            fileLabel.html(files[0].name);
+                        }
+                    });
+                });
+            </script>
+        }
+    </form>
+</div>
