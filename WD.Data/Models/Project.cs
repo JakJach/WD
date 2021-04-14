@@ -16,7 +16,7 @@ namespace WD.Data.Models
         public int ReviewerNote { get; set; }
         public string Review { get; set; }
         public string FileName { get; set; }
-        public List<string> AttachmentsName { get; set; }
+        public ICollection<string> AttachmentsName { get; set; }
 
     }
 }

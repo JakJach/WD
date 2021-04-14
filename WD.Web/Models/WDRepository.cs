@@ -9,7 +9,6 @@ namespace WD.Web.Models
     {
         #region Fields
         private readonly WDContext _context;
-
         #endregion
 
         #region Constructors

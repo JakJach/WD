@@ -19,7 +19,7 @@ namespace WD.Data.Models
         public string Review { get; set; }
         public string PromoterOpinion { get; set; }
         public string FileName { get; set; }
-        public List<string> AttachmentsName { get; set; }
+        public ICollection<string> AttachmentsName { get; set; }
 
     }
 }

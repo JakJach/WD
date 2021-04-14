@@ -9,7 +9,7 @@ namespace WD.Data.Models
         [Key]
         public int ID { get; set; }
         public int TeacherID { get; set; }
-        public List<int> StudentIDs { get; set; }
-        public List<int> ProjectIDs { get; set; }
+        public ICollection<int> StudentIDs { get; set; }
+        public ICollection<int> ProjectIDs { get; set; }
     }
 }

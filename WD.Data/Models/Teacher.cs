@@ -8,7 +8,7 @@ namespace WD.Data.Models
         public string Login { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public List<int> Classes { get; set; }
+        public ICollection<int> Classes { get; set; }
         public EScienceTitles Title { get; set; }
     }
 }
