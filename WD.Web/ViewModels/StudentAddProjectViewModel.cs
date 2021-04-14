@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
-namespace WD.Web.ViewModels
+namespace WD.Web.Models
 {
     public class StudentAddProjectViewModel
     {
