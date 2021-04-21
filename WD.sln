@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WD.Web", "WD.Web\WD.Web.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WD.Data", "WD.Data\WD.Data.csproj", "{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WD.Web.Tests", "WD.Web.Tests\WD.Web.Tests.csproj", "{051444AE-CC87-48FF-8636-A5E7FECCAE38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WD.Web.Tests", "WD.Web.Tests\WD.Web.Tests.csproj", "{051444AE-CC87-48FF-8636-A5E7FECCAE38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "WD.DB\DB.csproj", "{AD5647D1-1248-487A-A871-446DCF69F45A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{051444AE-CC87-48FF-8636-A5E7FECCAE38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{051444AE-CC87-48FF-8636-A5E7FECCAE38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{051444AE-CC87-48FF-8636-A5E7FECCAE38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5647D1-1248-487A-A871-446DCF69F45A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5647D1-1248-487A-A871-446DCF69F45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5647D1-1248-487A-A871-446DCF69F45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5647D1-1248-487A-A871-446DCF69F45A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
