@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cdf13c2b08ed44ff9aac8558e381a8c4" Name="Diagram1" >
+        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="3.875" PointY="0.75" />
+        <EntityTypeShape EntityType="DBModel.Student" Width="1.5" PointX="6.875" PointY="0.75" />
+        <InheritanceConnector EntityType="DBModel.Student" />
+        <EntityTypeShape EntityType="DBModel.Teacher" Width="1.5" PointX="1.125" PointY="0.75" />
+        <InheritanceConnector EntityType="DBModel.Teacher" />
+        <EntityTypeShape EntityType="DBModel.Class" Width="1.5" PointX="2.375" PointY="4.25" />
+        <EntityTypeShape EntityType="DBModel.Project" Width="1.5" PointX="7.375" PointY="3.375" />
+        <EntityTypeShape EntityType="DBModel.Thesis" Width="1.875" PointX="12.875" PointY="1.125" />
+        <EntityTypeShape EntityType="DBModel.File" Width="1.5" PointX="10.375" PointY="4.625" />
+        <AssociationConnector Association="DBModel.ThesisFiles" />
+        <AssociationConnector Association="DBModel.StudentThesis" />
+        <AssociationConnector Association="DBModel.ProjectFile" />
+        <AssociationConnector Association="DBModel.StudentClass" />
+        <AssociationConnector Association="DBModel.ClassProject" />
+        <AssociationConnector Association="DBModel.ClassTeacher" />
+        <AssociationConnector Association="DBModel.Promoter" />
+        <AssociationConnector Association="DBModel.Reviewer" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
