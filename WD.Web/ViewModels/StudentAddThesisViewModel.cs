@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using WD.Data.Models;
 
-namespace WD.Web.ViewModels
+namespace WD.Web.Models
 {
     public class StudentAddThesisViewModel
     {
