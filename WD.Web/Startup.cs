@@ -1,14 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System.IO;
-using WD.Data.Models;
-using WD.Data.Services;
 using WD.Web.Models;
 
 namespace WD.Web
@@ -27,27 +24,16 @@ namespace WD.Web
         {
             services.AddControllersWithViews();
 
-            services.AddScoped<IWDRepository, WDRepository>();
-            services.AddScoped<IUser, User>();
-
             //downloading files
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
-            //Database context
-            services.AddDbContext<WDContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
-            //Login services
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            {
-                options.Password.RequiredLength = 0;
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredUniqueChars = 0;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<WDContext>();
+            //Database context
+            services.AddDbContext<WDWebContext>(opt =>
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,7 +51,7 @@ namespace WD.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

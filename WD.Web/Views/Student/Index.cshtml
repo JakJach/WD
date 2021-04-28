@@ -1,4 +1,4 @@
-﻿@model StudentViewModel
+﻿@model Student
 @{
     ViewData["Title"] = "Wirtualny Dziekanat";
 }
@@ -14,15 +14,15 @@
                 <tbody>
                     <tr>
                         <td>Imię:</td>
-                        <td>@Model.LoggedInStudent.Name</td>
+                        <td>@Model.Name</td>
                     </tr>
                     <tr>
                         <td>Nazwisko:</td>
-                        <td>@Model.LoggedInStudent.Surname</td>
+                        <td>@Model.Surname</td>
                     </tr>
                     <tr>
                         <td>Adres e-mail:</td>
-                        <td>@Model.LoggedInStudent.Email</td>
+                        <td>@Model.Email</td>
                     </tr>
                 </tbody>
             </table>
@@ -47,41 +47,41 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (Project project in Model.StudentProjects)
+                                @foreach (Class classes in Model.Classes)
                                 {
-                                <tr>
-                                    @foreach (Classes classes in Model.StudentClasses)
-                                    {
-                                        @if (classes.ID == project.ClassesID)
+                                    <tr>
+                                        @foreach (Project project in classes.Projects)
                                         {
-                                            <td>@classes.Name</td>
-
-                                        }
-                                    }
-                                    <td>@project.Name</td>
-                                    @if (project.IsUploaded)
-                                    {
-                                        @if (project.IsReviewed)
-                                        {
-                                            @if (project.ReviewerNote < 3)
+                                            @if (classes.ClassId == project.ClassId)
                                             {
-                                                <td class="text-danger">Projekt nie został zaliczony</td>
+                                                <td>@classes.Name</td>
+
+                                            }
+                                            <td>@project.Title</td>
+                                            @if (project.IsSubmitted)
+                                            {
+                                                @if (project.IsReviewed)
+                                                {
+                                                    @if (project.Note < 3)
+                                                    {
+                                                        <td class="text-danger">Projekt nie został zaliczony</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="text-success">Projekt został zaliczony.<br />Ocena: @project.Note</td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-dark">Projekt nie został jeszcze oceniony.</td>
+                                                }
                                             }
                                             else
                                             {
-                                                <td class="text-success">Projekt został zaliczony.<br />Ocena: @project.ReviewerNote</td>
+                                                <td><a class="btn btn-dark text-white" asp-controller="Student" asp-action="AddProject" asp-route-id="@project.ProjectId">Dodaj projekt</a></td>
                                             }
                                         }
-                                        else
-                                        {
-                                            <td class="text-dark">Projekt nie został jeszcze oceniony.</td>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <td><a class="btn btn-dark text-white" asp-controller="Student" asp-action="AddProject" asp-route-id="@project.ID">Dodaj projekt</a></td>
-                                    }
-                                </tr>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -97,14 +97,14 @@
                             <tbody>
                                 <tr>
                                     <td>Tytuł:</td>
-                                    <td>@Model.StudentThesis.Title</td>
+                                    <td>@Model.Thesis.Title</td>
                                 </tr>
                                 <tr>
                                     <td>Plik główny pracy:</td>
                                     <td>
-                                        @if (Model.StudentThesis.IsUploaded)
+                                        @if (Model.Thesis.IsSubmitted)
                                         {
-                                            @Model.StudentThesis.FileName
+                                            @Model.Thesis.Files
                                         }
                                         else
                                         {
@@ -115,9 +115,9 @@
                                 <tr>
                                     <td>Ocena promotora:</td>
                                     <td>
-                                        @if (Model.StudentThesis.IsCheckedByPromoter)
+                                        @if (Model.Thesis.IsAccepted)
                                         {
-                                            @Model.StudentThesis.PromoterNote
+                                            @Model.Thesis.PromoterNote
                                         }
                                         else
                                         {
@@ -128,18 +128,18 @@
                                 <tr>
                                     <td>Opinia promotora:</td>
                                     <td>
-                                        @if (Model.StudentThesis.IsCheckedByPromoter)
+                                        @if (Model.Thesis.IsAccepted)
                                         {
-                                            @Model.StudentThesis.PromoterOpinion
+                                            @Model.Thesis.PromoterOpinion
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Ocena recenzenta:</td>
                                     <td>
-                                        @if (Model.StudentThesis.IsCheckedByReviewer)
+                                        @if (Model.Thesis.IsReviewed)
                                         {
-                                            @Model.StudentThesis.ReviewerNote
+                                            @Model.Thesis.ReviewerNote
                                         }
                                         else
                                         {
@@ -150,9 +150,9 @@
                                 <tr>
                                     <td>Opinia recenzenta:</td>
                                     <td>
-                                        @if (Model.StudentThesis.IsCheckedByReviewer)
+                                        @if (Model.Thesis.IsReviewed)
                                         {
-                                            @Model.StudentThesis.Review
+                                            @Model.Thesis.Review
                                         }
                                     </td>
                                 </tr>
@@ -168,13 +168,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (Classes classes in Model.StudentClasses)
-                                {
-                                    <tr>
-                                        <td>@classes.Name</td>
-                                        <td>@Model.LoggedInStudent.FinalNotes.ElementAt(classes.ID -1)</td>
-                                    </tr>
-                                }
+                                @*@foreach (Class classes in Model.Classes)
+                                    {
+                                        <tr>
+                                            <td>@classes.Name</td>
+                                        </tr>
+                                    }*@
                             </tbody>
                         </table>
                     </div>

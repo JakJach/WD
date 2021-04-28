@@ -1,22 +1,29 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WD.Data.Models
 {
-    public class Project
+    public partial class Project
     {
-        [Key]
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int ClassesID { get; set; }
-        public List<int> StudentIDs { get; set; }
-        public bool IsUploaded { get; set; }
-        public int ReviewerID { get; set; }
-        public bool IsReviewed { get; set; }
-        public int ReviewerNote { get; set; }
-        public string Review { get; set; }
-        public string FileName { get; set; }
-        public ICollection<string> AttachmentsName { get; set; }
+        public Project()
+        {
+            Files = new HashSet<File>();
+        }
 
+        public int ProjectId { get; set; }
+        public double? Note { get; set; }
+        public string Review { get; set; }
+        public string Scope { get; set; }
+        public string Goal { get; set; }
+        public bool IsSubmitted { get; set; }
+        public DateTime? SubmissionDate { get; set; }
+        public bool IsReviewed { get; set; }
+        public DateTime? ReviewDate { get; set; }
+        public DateTime CreationDate { get; set; }
+        public string Title { get; set; }
+        public int ClassId { get; set; }
+
+        public virtual ICollection<File> Files { get; set; }
+        public virtual Class Class { get; set; }
     }
 }

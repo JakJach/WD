@@ -2,13 +2,16 @@
 
 namespace WD.Data.Models
 {
-    public class Student : User
+    public partial class Student : User
     {
-        public string Login { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public ICollection<int> Classes { get; set; }
-        public int ThesisID { get; set; }
-        public ICollection<int> FinalNotes { get; set; }
+        public Student()
+        {
+            Classes = new HashSet<Class>();
+        }
+
+        public bool HasThesis { get; set; }
+
+        public virtual Thesis Thesis { get; set; }
+        public virtual ICollection<Class> Classes { get; set; }
     }
 }

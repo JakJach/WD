@@ -6,7 +6,7 @@ namespace WD.Web.Models
     public class StudentViewModel
     {
         public Student LoggedInStudent { get; set; }
-        public IEnumerable<Classes> StudentClasses { get; set; }
+        public IEnumerable<Class> StudentClasses { get; set; }
         public IEnumerable<Project> StudentProjects { get; set; }
         public Thesis StudentThesis { get; set; }
     }

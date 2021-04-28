@@ -6,7 +6,7 @@ namespace WD.Web.Models
     public class TeacherViewModel
     {
         public Teacher LoggedInTeacher { get; set; }
-        public IEnumerable<Classes> TeacherClasses { get; set; }
+        public IEnumerable<Class> TeacherClasses { get; set; }
         public IEnumerable<Project> TeacherProjects { get; set; }
         public IEnumerable<Student> TeacherStudents { get; set; }
         public IEnumerable<Thesis> TeacherPromotingTheses { get; set; }

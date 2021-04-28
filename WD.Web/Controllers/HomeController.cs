@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using WD.Data.Models;
-using WD.Data.Services;
 using WD.Web.Models;
 
 namespace VD.Web.Controllers
@@ -14,23 +14,18 @@ namespace VD.Web.Controllers
     public class HomeController : Controller
     {
         #region Fields
-        private readonly IWDRepository _repository;
+        private readonly WDWebContext _context;
         private readonly ILogger<HomeController> _logger;
         public IConfiguration Configuration { get; }
-
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
         #endregion
 
         #region Constructors
-        public HomeController(ILogger<HomeController> logger, IWDRepository repository,
-            IConfiguration configuration, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public HomeController(ILogger<HomeController> logger, WDWebContext context,
+            IConfiguration configuration)
         {
             _logger = logger;
-            _repository = repository;
+            _context = context;
             Configuration = configuration;
-            _signInManager = signInManager;
-            _userManager = userManager;
         }
         #endregion
 
@@ -38,43 +33,38 @@ namespace VD.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var model = new HomeViewModel();
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(HomeViewModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(string email, string password)
         {
             if (ModelState.IsValid)
             {
-                Microsoft.AspNetCore.Identity.SignInResult result;
-                try
+                var hashedPassword = GetHashedPassword(password);
+                var users = _context.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(hashedPassword)).ToList();
+
+                if(users.Count > 0)
                 {
-                    result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
-                    if (result.Succeeded)
-                    {
-                        if (_repository.GetUser(model.Email).IsStudent)
-                        {
-                            Student student = _repository.GetStudent(model.Email);
-                            return RedirectToAction("index", "student", new { id = student.ID });
-                        }
-                        else
-                        {
-                            Teacher teacher = _repository.GetTeacher(model.Email);
-                            return RedirectToAction("index", "teacher", new { id = teacher.ID });
-                        }
-                    }
+                    var _user = users.FirstOrDefault();
+                    HttpContext.Session.SetString("Name", _user.Name);
+                    HttpContext.Session.SetString("Surname", _user.Surname);
+                    HttpContext.Session.SetString("Email", _user.Email);
+                    HttpContext.Session.SetInt32("UserID", _user.UserID);
+
+                    if (_user.GetType() == typeof(Student))
+                        return RedirectToAction("index", "student", _user.UserID);
                     else
-                    {
-                        ModelState.AddModelError(string.Empty, "Nieudane logowanie");
-                    }
+                        return RedirectToAction("index", "teacher", _user.UserID);
                 }
-                catch (Exception)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, "Nie udało się połączyć z bazą danych");
+                    ModelState.AddModelError(string.Empty, "Nieudane logowanie");
+                    return View();
                 }
             }
-            return View(model);
+            return View();
         }
 
         [HttpGet]
@@ -84,20 +74,46 @@ namespace VD.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(HomeViewModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Register(User _user)
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email, PasswordHash = model.Password };
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
+                var check = _context.Users.FirstOrDefault(u => u.Email == _user.Email);
+                if(check == null)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _user.Password = GetHashedPassword(_user.Password);
+                    _context.Users.Add(_user);
+                    _context.SaveChanges();
                     return RedirectToAction("index", "home");
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User with this email addres already exists.");
+                    return View();
+                }
             }
-            return View(model);
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("index");
+        }
+
+        private static string GetHashedPassword(string password)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] source = Encoding.UTF8.GetBytes(password);
+            byte[] target = md5.ComputeHash(source);
+            string result = null;
+
+            for(int i = 0; i < target.Length; i++)
+            {
+                result += target[i].ToString("x2");
+            }
+            return result;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
