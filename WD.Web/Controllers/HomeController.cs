@@ -14,7 +14,7 @@ namespace VD.Web.Controllers
 {
     public class HomeController : Controller
     {
-        #region Fields
+        #region Fields & properties
         private readonly WDWebContext _context;
         private readonly ILogger<HomeController> _logger;
         public IConfiguration Configuration { get; }
@@ -26,6 +26,7 @@ namespace VD.Web.Controllers
         {
             _logger = logger;
             _context = context;
+
             Configuration = configuration;
         }
         #endregion
@@ -62,6 +63,7 @@ namespace VD.Web.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Nieudane logowanie");
+                    _logger.LogInformation(string.Format("Home\t|Could not find user with email: {0}", email));
                     return View();
                 }
             }
