@@ -75,6 +75,9 @@
     <Compile Include="File.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FinalNote.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs">
       <DependentUpon>DBModel.tt</DependentUpon>

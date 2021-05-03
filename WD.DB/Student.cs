@@ -18,6 +18,7 @@ namespace DB
         public Student()
         {
             this.Classes = new HashSet<Class>();
+            this.FinalNotes = new HashSet<FinalNote>();
         }
     
         public bool HasThesis { get; set; }
@@ -25,5 +26,7 @@ namespace DB
         public virtual Thesis Thesis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Class> Classes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinalNote> FinalNotes { get; set; }
     }
 }

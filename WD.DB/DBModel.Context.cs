@@ -30,5 +30,6 @@ namespace DB
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Thesis> Theses { get; set; }
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<FinalNote> FinalNotes { get; set; }
     }
 }

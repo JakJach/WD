@@ -11,6 +11,6 @@ namespace WD.Web.Models
         public IEnumerable<Student> TeacherStudents { get; set; }
         public IEnumerable<Thesis> TeacherPromotingTheses { get; set; }
         public IEnumerable<Thesis> TeacherReviewingTheses { get; set; }
-        public IEnumerable<StudentFinalNote> StudentFinalNotes { get; set; }
+        public IEnumerable<FinalNote> StudentFinalNotes { get; set; }
     }
 }

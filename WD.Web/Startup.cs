@@ -14,10 +14,10 @@ namespace WD.Web
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration _configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -29,11 +29,12 @@ namespace WD.Web
                 new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
             services.AddDistributedMemoryCache();
+
             services.AddSession();
 
             //Database context
             services.AddDbContext<WDWebContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+                opt.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,9 +50,15 @@ namespace WD.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
+            //app.UseFileServer();
+
             app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();

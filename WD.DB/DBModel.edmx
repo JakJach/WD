@@ -332,7 +332,16 @@
             <End Role="Teacher" EntitySet="Users" />
             <End Role="Thesis" EntitySet="Theses" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="FinalNotes" EntityType="DBModel.FinalNote" />
+          <AssociationSet Name="FinalNoteClass" Association="DBModel.FinalNoteClass">
+            <End Role="FinalNote" EntitySet="FinalNotes" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FinalNoteStudent" Association="DBModel.FinalNoteStudent">
+            <End Role="FinalNote" EntitySet="FinalNotes" />
+            <End Role="Student" EntitySet="Users" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserID" />
@@ -347,6 +356,7 @@
           <Property Name="HasThesis" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Thesis" Relationship="DBModel.StudentThesis" FromRole="Student" ToRole="Thesis" />
           <NavigationProperty Name="Classes" Relationship="DBModel.StudentClass" FromRole="Student" ToRole="Class" />
+          <NavigationProperty Name="FinalNotes" Relationship="DBModel.FinalNoteStudent" FromRole="Student" ToRole="FinalNote" />
         </EntityType>
         <EntityType Name="Teacher" BaseType="DBModel.User" >
           <Property Name="Title" Type="String" Nullable="false" />
@@ -365,6 +375,7 @@
           <NavigationProperty Name="Students" Relationship="DBModel.StudentClass" FromRole="Class" ToRole="Student" />
           <NavigationProperty Name="Projects" Relationship="DBModel.ClassProject" FromRole="Class" ToRole="Project" />
           <NavigationProperty Name="Teacher" Relationship="DBModel.ClassTeacher" FromRole="Class" ToRole="Teacher" />
+          <NavigationProperty Name="FinalNote" Relationship="DBModel.FinalNoteClass" FromRole="Class" ToRole="FinalNote" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -498,7 +509,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="FinalNote">
+          <Key>
+            <PropertyRef Name="NoteId" />
+          </Key>
+          <Property Name="NoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Note" Type="String" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="DBModel.FinalNoteClass" FromRole="FinalNote" ToRole="Class" />
+          <NavigationProperty Name="Student" Relationship="DBModel.FinalNoteStudent" FromRole="FinalNote" ToRole="Student" />
+        </EntityType>
+        <Association Name="FinalNoteClass">
+          <End Type="DBModel.FinalNote" Role="FinalNote" Multiplicity="*" />
+          <End Type="DBModel.Class" Role="Class" Multiplicity="1" />
+        </Association>
+        <Association Name="FinalNoteStudent">
+          <End Type="DBModel.FinalNote" Role="FinalNote" Multiplicity="*" />
+          <End Type="DBModel.Student" Role="Student" Multiplicity="1" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

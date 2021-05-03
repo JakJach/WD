@@ -19,6 +19,7 @@ namespace DB
         {
             this.Students = new HashSet<Student>();
             this.Projects = new HashSet<Project>();
+            this.FinalNotes = new HashSet<FinalNote>();
         }
     
         public int ClassId { get; set; }
@@ -29,5 +30,7 @@ namespace DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Projects { get; set; }
         public virtual Teacher Teacher { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinalNote> FinalNotes { get; set; }
     }
 }
