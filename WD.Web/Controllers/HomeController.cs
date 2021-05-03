@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using WD.Data.Models;
 using WD.Web.Models;
+using WD.Web.ViewModels;
 
 namespace VD.Web.Controllers
 {

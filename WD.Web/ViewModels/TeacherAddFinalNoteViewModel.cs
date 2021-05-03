@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WD.Data.Models;
 
-namespace WD.Web.Models
+namespace WD.Web.ViewModels
 {
     public class TeacherAddFinalNoteViewModel
     {
