@@ -33,8 +33,11 @@ namespace WD.Web
             services.AddSession();
 
             //Database context
-            services.AddDbContext<WDWebContext>(opt =>
+            services.AddDbContextPool<WDWebContext>(opt =>
                 opt.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
+
+            //DB repository service injection
+            services.AddScoped<IWDWebRepository, SQLRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

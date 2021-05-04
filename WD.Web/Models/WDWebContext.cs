@@ -17,6 +17,7 @@ namespace WD.Web.Models
             modelBuilder.Entity<Project>().ToTable("Projects");
             modelBuilder.Entity<Thesis>().ToTable("Theses");
             modelBuilder.Entity<File>().ToTable("Files");
+            modelBuilder.Entity<FinalNote>().ToTable("FinalNotes");
 
             base.OnModelCreating(modelBuilder);
         }
@@ -26,5 +27,6 @@ namespace WD.Web.Models
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Thesis> Theses { get; set; }
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<FinalNote> FinalNotes { get; set; }
     }
 }
