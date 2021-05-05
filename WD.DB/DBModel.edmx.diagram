@@ -22,9 +22,9 @@
         <AssociationConnector Association="DBModel.ClassTeacher" />
         <AssociationConnector Association="DBModel.Promoter" />
         <AssociationConnector Association="DBModel.Reviewer" />
-        <EntityTypeShape EntityType="DBModel.FinalNote" Width="1.5" PointX="10.375" PointY="0.75" />
-        <AssociationConnector Association="DBModel.FinalNoteClass" />
+        <EntityTypeShape EntityType="DBModel.FinalNote" Width="1.5" PointX="10.125" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="DBModel.FinalNoteStudent" />
+        <AssociationConnector Association="DBModel.FinalNoteClass" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

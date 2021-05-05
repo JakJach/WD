@@ -28,8 +28,9 @@ namespace WD.Data.Models
         public string Scope { get; set; }
         public string Goal { get; set; }
         public string StudentQualifications { get; set; }
+        public int? StudentId { get; set; }
         public int PromoterId { get; set; }
-        public int ReviewerId { get; set; }
+        public int? ReviewerId { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
         public virtual Student Student { get; set; }

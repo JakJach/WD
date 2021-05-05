@@ -13,11 +13,23 @@ namespace WD.Web.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("Users");
+
             modelBuilder.Entity<Class>().ToTable("Classes");
+
             modelBuilder.Entity<Project>().ToTable("Projects");
+
             modelBuilder.Entity<Thesis>().ToTable("Theses");
+
             modelBuilder.Entity<File>().ToTable("Files");
-            modelBuilder.Entity<FinalNote>().ToTable("FinalNotes");
+
+            modelBuilder.Entity<FinalNote>().ToTable("FinalNotes").HasKey(fn => fn.NoteId);
+
+            modelBuilder.Entity<Student>().ToTable("Students").HasOne(s => s.Thesis).WithOne(t => t.Student);
+
+            modelBuilder.Entity<Teacher>().ToTable("Teachers").HasMany(t => t.PromotedTheses).WithOne(t => t.Promoter).HasForeignKey(t => t.PromoterId);
+
+            modelBuilder.Entity<Teacher>().ToTable("Teachers").HasMany(t => t.ReviewedTheses).WithOne(t => t.Reviewer).HasForeignKey(t => t.ReviewerId);
+
 
             base.OnModelCreating(modelBuilder);
         }

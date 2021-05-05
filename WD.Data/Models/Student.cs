@@ -7,13 +7,15 @@ namespace WD.Data.Models
         public Student()
         {
             Classes = new HashSet<Class>();
-            FinalNotes = new HashSet<FinalNote>();
+            FinalNote = new HashSet<FinalNote>();
+            Projects = new HashSet<Project>();
         }
 
         public bool HasThesis { get; set; }
 
         public virtual Thesis Thesis { get; set; }
         public virtual ICollection<Class> Classes { get; set; }
-        public virtual ICollection<FinalNote> FinalNotes { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<FinalNote> FinalNote { get; set; }
     }
 }
