@@ -22,7 +22,14 @@ namespace WD.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Database context
+            services.AddDbContextPool<WDWebContext>(opt =>
+                opt.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllersWithViews();
+
+            //DB repository service injection
+            services.AddScoped<IWDWebRepository, SQLRepository>();
 
             //downloading files
             services.AddSingleton<IFileProvider>(
@@ -31,13 +38,6 @@ namespace WD.Web
             services.AddDistributedMemoryCache();
 
             services.AddSession();
-
-            //Database context
-            services.AddDbContextPool<WDWebContext>(opt =>
-                opt.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"), o => o.MigrationsAssembly("WD.Web")));
-
-            //DB repository service injection
-            services.AddScoped<IWDWebRepository, SQLRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
