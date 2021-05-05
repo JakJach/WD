@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WD.Web.Models;
 
 namespace WD.Web.Migrations
 {
     [DbContext(typeof(WDWebContext))]
-    partial class WDWebContextModelSnapshot : ModelSnapshot
+    [Migration("20210505210025_Seed2")]
+    partial class Seed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

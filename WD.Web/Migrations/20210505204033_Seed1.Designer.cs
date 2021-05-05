@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WD.Web.Models;
 
 namespace WD.Web.Migrations
 {
     [DbContext(typeof(WDWebContext))]
-    partial class WDWebContextModelSnapshot : ModelSnapshot
+    [Migration("20210505204033_Seed1")]
+    partial class Seed1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,7 +296,7 @@ namespace WD.Web.Migrations
                             UserID = 1,
                             Email = "jakjach@student.agh.edu.pl",
                             Name = "Jakub",
-                            Password = "42e7c00e8f7af060ba54331cd81b13a8",
+                            Password = "jakjach",
                             Surname = "Jachowicz",
                             HasThesis = true
                         },
@@ -303,7 +305,7 @@ namespace WD.Web.Migrations
                             UserID = 2,
                             Email = "alexbial@student.agh.edu.pl",
                             Name = "Alex",
-                            Password = "124b63f14a3e2e080eb65521285f9611",
+                            Password = "alexbial",
                             Surname = "Białas",
                             HasThesis = true
                         },
@@ -312,7 +314,7 @@ namespace WD.Web.Migrations
                             UserID = 3,
                             Email = "matkas@student.agh.edu.pl",
                             Name = "Mateusz",
-                            Password = "db4a311ab5789e9cdfafbec0f8e6bdc6",
+                            Password = "matkas",
                             Surname = "Kasprzak",
                             HasThesis = true
                         });

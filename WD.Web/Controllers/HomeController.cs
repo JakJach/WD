@@ -4,9 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using WD.Data.Models;
+using WD.Data.Tools;
 using WD.Web.Models;
 using WD.Web.ViewModels;
 
@@ -44,7 +43,7 @@ namespace VD.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var hashedPassword = GetHashedPassword(password);
+                var hashedPassword = PasswordHasher.GetHashedPassword(password);
                 var users = _context.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(hashedPassword)).ToList();
 
                 if(users.Count > 0)
@@ -85,7 +84,7 @@ namespace VD.Web.Controllers
                 var check = _context.Users.FirstOrDefault(u => u.Email == _user.Email);
                 if(check == null)
                 {
-                    _user.Password = GetHashedPassword(_user.Password);
+                    _user.Password = PasswordHasher.GetHashedPassword(_user.Password);
                     _context.Users.Add(_user);
                     _context.SaveChanges();
                     return RedirectToAction("index", "home");
@@ -103,20 +102,6 @@ namespace VD.Web.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("index");
-        }
-
-        private static string GetHashedPassword(string password)
-        {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] source = Encoding.UTF8.GetBytes(password);
-            byte[] target = md5.ComputeHash(source);
-            string result = null;
-
-            for(int i = 0; i < target.Length; i++)
-            {
-                result += target[i].ToString("x2");
-            }
-            return result;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

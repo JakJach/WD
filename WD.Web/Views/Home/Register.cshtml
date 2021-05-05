@@ -1,4 +1,4 @@
-﻿@model HomeViewModel;
+﻿@model User;
 @{
     ViewData["Title"] = "Wirtualny Dziekanat";
 }
@@ -14,6 +14,16 @@
                         <label asp-for="Email" class="text-dark">Adres email:</label><br />
                         <input type="text" asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="text-dark">Imię:</label><br />
+                        <input type="text" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Surname" class="text-dark">Nazwisko:</label><br />
+                        <input type="text" asp-for="Surname" class="form-control" />
+                        <span asp-validation-for="Surname" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="password" class="text-dark">Hasło:</label>

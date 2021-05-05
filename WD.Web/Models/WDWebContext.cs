@@ -14,6 +14,12 @@ namespace WD.Web.Models
         {
             modelBuilder.Entity<User>().ToTable("Users");
 
+            modelBuilder.Entity<Student>().ToTable("Students").HasOne(s => s.Thesis).WithOne(t => t.Student);
+
+            modelBuilder.Entity<Teacher>().ToTable("Teachers").HasMany(t => t.PromotedTheses).WithOne(t => t.Promoter).HasForeignKey(t => t.PromoterId);
+
+            modelBuilder.Entity<Teacher>().ToTable("Teachers").HasMany(t => t.ReviewedTheses).WithOne(t => t.Reviewer).HasForeignKey(t => t.ReviewerId);
+
             modelBuilder.Entity<Class>().ToTable("Classes");
 
             modelBuilder.Entity<Project>().ToTable("Projects");
@@ -24,12 +30,7 @@ namespace WD.Web.Models
 
             modelBuilder.Entity<FinalNote>().ToTable("FinalNotes").HasKey(fn => fn.NoteId);
 
-            modelBuilder.Entity<Student>().ToTable("Students").HasOne(s => s.Thesis).WithOne(t => t.Student);
-
-            modelBuilder.Entity<Teacher>().ToTable("Teachers").HasMany(t => t.PromotedTheses).WithOne(t => t.Promoter).HasForeignKey(t => t.PromoterId);
-
-            modelBuilder.Entity<Teacher>().ToTable("Teachers").HasMany(t => t.ReviewedTheses).WithOne(t => t.Reviewer).HasForeignKey(t => t.ReviewerId);
-
+            modelBuilder.Seed();
 
             base.OnModelCreating(modelBuilder);
         }
