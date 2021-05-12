@@ -58,8 +58,6 @@ namespace WD.Web
 
             app.UseStaticFiles();
 
-            //app.UseFileServer();
-
             app.UseSession();
 
             app.UseRouting();
@@ -70,7 +68,7 @@ namespace WD.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Login}/{id?}");
             });
         }
     }

@@ -31,15 +31,20 @@ namespace VD.Web.Controllers
         #endregion
 
         #region Views
-        [HttpGet]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(string email, string password)
+        public IActionResult Login(string email, string password)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +106,7 @@ namespace VD.Web.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("index");
+            return RedirectToAction("login");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
