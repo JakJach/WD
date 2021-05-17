@@ -31,9 +31,9 @@ namespace VD.Web.Controllers
         #endregion
 
         #region Views
-        public IActionResult Index()
+        public IActionResult Index(User user)
         {
-            return View();
+            return View(new UserViewModel(user));
         }
 
         [HttpGet]
@@ -59,10 +59,7 @@ namespace VD.Web.Controllers
                     HttpContext.Session.SetString("Email", _user.Email);
                     HttpContext.Session.SetInt32("UserID", _user.UserID);
 
-                    if (_user.GetType() == typeof(Student))
-                        return RedirectToAction("index", "student", _user.UserID);
-                    else
-                        return RedirectToAction("index", "teacher", _user.UserID);
+                    return RedirectToAction("index", "home", _user);
                 }
                 else
                 {
@@ -92,7 +89,7 @@ namespace VD.Web.Controllers
                     _user.Password = PasswordHasher.GetHashedPassword(_user.Password);
                     _context.Users.Add(_user);
                     _context.SaveChanges();
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("login");
                 }
                 else
                 {
@@ -114,10 +111,6 @@ namespace VD.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        #endregion
-
-        #region Methods
-
         #endregion
     }
 }

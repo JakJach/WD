@@ -1,7 +1,184 @@
-﻿@{
+﻿@model UserViewModel
+@{
     ViewData["Title"] = "Wirtualny Dziekanat";
 }
 
-<div class="container row justify-content-center align-items-center">
-    <h1>Succesfully logged in!</h1>
-</div>
+
+<section id="tabs" class="project-tab">
+    <div class="container">
+        <div class="row">
+            <table class="table" cellspacing="2">
+                <thead>
+                    <tr><th>Twoje dane:</th><th></th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Imię:</td>
+                        <td>@Model.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Nazwisko:</td>
+                        <td>@Model.Surname</td>
+                    </tr>
+                    <tr>
+                        <td>Adres e-mail:</td>
+                        <td>@Model.Email</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-projects-tab" href="#nav-projects" style="background-color: #5cb85c; color: #f7f7f7;" data-toggle="tab" role="tab" aria-controls="nav-projects" aria-selected="true">Projekty</a>
+                        <a class="nav-item nav-link" id="nav-thesis-tab" href="#nav-thesis" style="background-color: #292b2c; color: #f7f7f7;" data-toggle="tab" role="tab" aria-controls="nav-thesis" aria-selected="false">Praca dyplomowa</a>
+                        <a class="nav-item nav-link" id="nav-notes-tab" href="#nav-notes" style="background-color: #d9534f; color: #f7f7f7;" data-toggle="tab" role="tab" aria-controls="nav-notes" aria-selected="false">Oceny końcowe</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-projects" role="tabpanel" aria-labelledby="nav-projects-tab">
+                        <table class="table" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Przedmiot</th>
+                                    <th>Tytuł projektu</th>
+                                    <th>Dodawanie</th>
+                                </tr>
+                            </thead>
+                            @*<tbody>
+                                @foreach (Class classes in Model.Classes)
+                                {
+                                    <tr>
+                                        @foreach (Project project in classes.Projects)
+                                        {
+                                            @if (classes.ClassId == project.ClassId)
+                                            {
+                                                <td>@classes.Name</td>
+
+                                            }
+                                            <td>@project.Title</td>
+                                            @if (project.IsSubmitted)
+                                            {
+                                                @if (project.IsReviewed)
+                                                {
+                                                    @if (project.Note < 3)
+                                                    {
+                                                        <td class="text-danger">Projekt nie został zaliczony</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="text-success">Projekt został zaliczony.<br />Ocena: @project.Note</td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-dark">Projekt nie został jeszcze oceniony.</td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td><a class="btn btn-dark text-white" asp-controller="Student" asp-action="AddProject" asp-route-id="@project.ProjectId">Dodaj projekt</a></td>
+                                            }
+                                        }
+                                    </tr>
+                                }
+                            </tbody>*@
+                        </table>
+                    </div>
+                    <div id="nav-thesis" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-thesis-tab">
+                        <table class="table" cellspacing="2">
+                            <thead>
+                                <tr>
+                                    <th>Dane pracy dyplomowej:</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            @*<tbody>
+                                <tr>
+                                    <td>Tytuł:</td>
+                                    <td>@Model.Thesis.Title</td>
+                                </tr>
+                                <tr>
+                                    <td>Plik główny pracy:</td>
+                                    <td>
+                                        @if (Model.Thesis.IsSubmitted)
+                                        {
+                                            @Model.Thesis.Files
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-dark text-white" asp-controller="Student" asp-action="AddThesis">Dodaj pracę dyplomową</a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ocena promotora:</td>
+                                    <td>
+                                        @if (Model.Thesis.IsAccepted)
+                                        {
+                                            @Model.Thesis.PromoterNote
+                                        }
+                                        else
+                                        {
+                                            <p>Promotor jeszcze nie ocenił twojej pracy</p>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Opinia promotora:</td>
+                                    <td>
+                                        @if (Model.Thesis.IsAccepted)
+                                        {
+                                            @Model.Thesis.PromoterOpinion
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ocena recenzenta:</td>
+                                    <td>
+                                        @if (Model.Thesis.IsReviewed)
+                                        {
+                                            @Model.Thesis.ReviewerNote
+                                        }
+                                        else
+                                        {
+                                            <p>Recenzent jeszcze nie ocenił twojej pracy</p>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Opinia recenzenta:</td>
+                                    <td>
+                                        @if (Model.Thesis.IsReviewed)
+                                        {
+                                            @Model.Thesis.Review
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>*@
+                        </table>
+                    </div>
+                    <div id="nav-notes" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-notes-tab">
+                        <table class="table" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Przedmiot</th>
+                                    <th>Ocena końcowa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*@foreach (Class classes in Model.Classes)
+                                    {
+                                        <tr>
+                                            <td>@classes.Name</td>
+                                        </tr>
+                                    }*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
