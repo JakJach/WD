@@ -41,5 +41,7 @@ namespace WD.Web.Models
         public virtual DbSet<Thesis> Theses { get; set; }
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<FinalNote> FinalNotes { get; set; }
+        public virtual DbSet<Teacher> Teachers { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
     }
 }

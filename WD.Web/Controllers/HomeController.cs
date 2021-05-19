@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -14,17 +15,19 @@ namespace VD.Web.Controllers
     public class HomeController : Controller
     {
         #region Fields & properties
-        private readonly WDWebContext _context;
+        private readonly IWDWebRepository _repository;
         private readonly ILogger<HomeController> _logger;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         public IConfiguration Configuration { get; }
         #endregion
 
         #region Constructors
-        public HomeController(ILogger<HomeController> logger, WDWebContext context,
+        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment hostingEnvironment, IWDWebRepository repository,
             IConfiguration configuration)
         {
             _logger = logger;
-            _context = context;
+            _hostingEnvironment = hostingEnvironment;
+            _repository = repository;
 
             Configuration = configuration;
         }
@@ -49,7 +52,7 @@ namespace VD.Web.Controllers
             if (ModelState.IsValid)
             {
                 var hashedPassword = PasswordHasher.GetHashedPassword(password);
-                var users = _context.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(hashedPassword)).ToList();
+                var users = _repository.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(hashedPassword)).ToList();
 
                 if(users.Count > 0)
                 {
@@ -83,12 +86,11 @@ namespace VD.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var check = _context.Users.FirstOrDefault(u => u.Email == _user.Email);
+                var check = _repository.Users.FirstOrDefault(u => u.Email == _user.Email);
                 if(check == null)
                 {
                     _user.Password = PasswordHasher.GetHashedPassword(_user.Password);
-                    _context.Users.Add(_user);
-                    _context.SaveChanges();
+                    _repository.Users.Add(_user);
                     return RedirectToAction("login");
                 }
                 else
