@@ -8,10 +8,9 @@ namespace WD.Web.ViewModels
     {
         public string Title { get; set; }
         public string Review { get; set; }
-        [RegularExpression(@"[0,2,3,4,5]")]
-        public int Note { get; set; }
+        [RegularExpression(@"[2.0,3.0,3.5,4.0,4.5,5.0]")]
+        public float Note { get; set; }
         public Student Student { get; set; }
-        public string FileName { get; set; }
-        public IEnumerable<string> AttachmentNames { get; set; }
+        public IEnumerable<string> Files { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace WD.Web.ViewModels
         public string PromoterName { get; set; }
         public string RevieverName { get; set; }
         public Thesis Thesis { get; set; }
-        public IFormFile File { get; set; }
-        public IEnumerable<IFormFile> Attachments { get; set; }
+        public IEnumerable<IFormFile> Files { get; set; }
     }
 }

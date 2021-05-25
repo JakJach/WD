@@ -11,8 +11,8 @@ namespace WD.Data.Models
         }
 
         public int ThesisId { get; set; }
-        public double? PromoterNote { get; set; }
-        public double? ReviewerNote { get; set; }
+        public float? PromoterNote { get; set; }
+        public float? ReviewerNote { get; set; }
         public string PromoterOpinion { get; set; }
         public string Review { get; set; }
         public string Title { get; set; }

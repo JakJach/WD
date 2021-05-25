@@ -24,20 +24,12 @@
 </div>
 <div class="container-fluid">
     <div>
-        <p class="text-dark">Pliki projektu:</p>
-        <div class="row">
-            <label asp-for="FileName" class="text-dark col-2 custom-control-label">Plik główny:</label>
-            <div class="col-10">
-                <label class="text-dark">@Model.FileName</label>
-                <a class="btn btn-dark text-white" asp-controller="teacher" asp-action="download" asp-route-filename="@Model.FileName">Pobierz</a>
-            </div>
-        </div>
-        @if(Model.AttachmentNames != null)
+        @if(Model.Files != null)
         {
         <div class="row">
-            <label asp-for="AttachmentNames" class="text-dark col-2 custom-control-label">Załączniki:</label>
+            <label asp-for="Files" class="text-dark col-2 custom-control-label">Pliki projektu:</label>
             <div class="col-10">
-                @foreach (string filename in Model.AttachmentNames)
+                @foreach (string filename in Model.Files)
                 {
                     <label class="text-dark">@filename</label>
                     <a class="btn btn-dark text-white" asp-controller="teacher" asp-action="download" asp-route-filename="@filename">Pobierz</a>

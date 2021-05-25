@@ -12,7 +12,7 @@ namespace WD.Data.Models
         }
 
         public int ProjectId { get; set; }
-        public double? Note { get; set; }
+        public float? Note { get; set; }
         public string Review { get; set; }
         public string Scope { get; set; }
         public string Goal { get; set; }

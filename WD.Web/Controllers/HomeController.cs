@@ -36,7 +36,7 @@ namespace VD.Web.Controllers
         #region Views
         public IActionResult Index(User user)
         {
-            return View(new UserViewModel(user));
+            return View(new IndexViewModel(user));
         }
 
         [HttpGet]

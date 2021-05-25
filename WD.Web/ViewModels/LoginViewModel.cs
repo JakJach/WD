@@ -2,7 +2,7 @@
 
 namespace WD.Web.ViewModels
 {
-    public class HomeViewModel
+    public class LoginViewModel
     {
         [Required]
         [EmailAddress]

@@ -3,9 +3,9 @@ using WD.Data.Models;
 
 namespace WD.Web.ViewModels
 {
-    public class UserViewModel
+    public class IndexViewModel
     {
-        public UserViewModel(User user)
+        public IndexViewModel(User user)
         {
             UserID = user.UserID;
             Name = user.Name;

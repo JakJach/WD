@@ -7,7 +7,6 @@ namespace WD.Web.ViewModels
     {
         public string ClassesName { get; set; }
         public string Title { get; set; }
-        public IFormFile File { get; set; }
-        public IEnumerable<IFormFile> Attachments { get; set; }
+        public IList<IFormFile> Files { get; set; }
     }
 }

@@ -34,19 +34,10 @@
         <h3 class="text-center text-dark">@Model.Thesis.Title</h3>
         <p class="text-danger"><br/>Możliwe jest dodanie tylko plików z rozszerzeniem: .pdf, .txt, .doc, .docx, .xls, .xlsx.<br/></p>
         <div class="form-group row">
-            <label asp-for="File" class="col-4 col-form-label">Główny plik pracy:</label>
+            <label asp-for="Files" class="col-4 col-form-label">Pliki pracy:</label>
             <div class="col-8">
                 <div class="custom-file">
-                    <input asp-for="File" class="form-control custom-file-input" accept=".xls,.xlsx,.doc,.docx,.pdf,.txt" />
-                    <label class="custom-file-label">Wybierz plik</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="Attachments" class="col-4 col-form-label">Załączniki:</label>
-            <div class="col-8">
-                <div class="custom-file">
-                    <input asp-for="Attachments" class="form-control custom-file-input" accept=".xls,.xlsx,.doc,.docx,.pdf,.txt" multiple />
+                    <input asp-for="Files" class="form-control custom-file-input" accept=".xls,.xlsx,.doc,.docx,.pdf,.txt" multiple />
                     <label class="custom-file-label">Wybierz załączniki</label>
                 </div>
             </div>
