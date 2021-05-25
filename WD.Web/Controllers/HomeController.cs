@@ -34,9 +34,14 @@ namespace VD.Web.Controllers
         #endregion
 
         #region Views
-        public IActionResult Index(User user)
+        [HttpGet]
+        public IActionResult Index(int id)
         {
-            return View(new IndexViewModel(user));
+            User user = _repository.Users.Where(u => u.UserID == id).FirstOrDefault();
+            IndexViewModel vm = null;
+            if (user != null)
+                vm = new IndexViewModel(user);
+            return View(vm);
         }
 
         [HttpGet]
@@ -46,7 +51,6 @@ namespace VD.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Login(string email, string password)
         {
             if (ModelState.IsValid)
@@ -54,15 +58,11 @@ namespace VD.Web.Controllers
                 var hashedPassword = PasswordHasher.GetHashedPassword(password);
                 var users = _repository.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(hashedPassword)).ToList();
 
-                if(users.Count > 0)
+                if (users.Count > 0)
                 {
-                    var _user = users.FirstOrDefault();
-                    HttpContext.Session.SetString("Name", _user.Name);
-                    HttpContext.Session.SetString("Surname", _user.Surname);
-                    HttpContext.Session.SetString("Email", _user.Email);
-                    HttpContext.Session.SetInt32("UserID", _user.UserID);
+                    var user = users.FirstOrDefault();
 
-                    return RedirectToAction("index", "home", _user);
+                    return RedirectToAction("Index", new { id = user.UserID });
                 }
                 else
                 {
@@ -87,11 +87,11 @@ namespace VD.Web.Controllers
             if (ModelState.IsValid)
             {
                 var check = _repository.Users.FirstOrDefault(u => u.Email == _user.Email);
-                if(check == null)
+                if (check == null)
                 {
                     _user.Password = PasswordHasher.GetHashedPassword(_user.Password);
                     _repository.Users.Add(_user);
-                    return RedirectToAction("login");
+                    return RedirectToAction("Login");
                 }
                 else
                 {
@@ -104,8 +104,7 @@ namespace VD.Web.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
-            return RedirectToAction("login");
+            return RedirectToAction("Login");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
