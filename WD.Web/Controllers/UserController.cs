@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
-using WD.Data.Models;
+using System.Threading.Tasks;
 using WD.Data.Tools;
 using WD.Web.Models;
 using WD.Web.ViewModels;
@@ -10,15 +11,23 @@ namespace WD.Web.Controllers
 {
     public class UserController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+
         private readonly ILogger<UserController> _logger;
         private readonly IWDWebRepository _repository;
 
-        public UserController(ILogger<UserController> logger, IWDWebRepository repository)
+        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+                                ILogger<UserController> logger, IWDWebRepository repository)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
+
             _logger = logger;
             _repository = repository;
         }
 
+        #region Register
         [HttpGet]
         public IActionResult Register()
         {
@@ -26,36 +35,64 @@ namespace WD.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterViewModel vm)
+        public async Task<IActionResult> Register(RegisterViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                var check = _repository.Users.FirstOrDefault(u => u.Email == vm.Email);
-                if (check == null)
+                var user = new IdentityUser()
                 {
-                    vm.Password = PasswordHasher.GetHashedPassword(vm.Password);
+                    UserName = string.Format("{0} {1}", vm.Name, vm.Surname),
+                    Email = vm.Email
+                };
 
-                    User newUser = null;
-                    if (vm.IsStudent)
-                        newUser = new Student() { Email = vm.Email, Name = vm.Name, Password = vm.Password, Surname = vm.Surname, HasThesis = false };
-                    else if (vm.IsTeacher)
-                        newUser = new Teacher() { Email = vm.Email, Name = vm.Name, Password = vm.Password, Surname = vm.Surname, CanBePromoter = true, CanBeReviewer = true, Title = null };
-                    else
-                        newUser = new User() { Email = vm.Email, Name = vm.Name, Password = vm.Password, Surname = vm.Surname };
+                var result = await _userManager.CreateAsync(user, vm.Password);
 
-                    var result = _repository.Add(newUser);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    RedirectToAction("Index", "Home");
+                }
 
-                    _logger.LogInformation(string.Format("New user {0} {1} registered", result.Name, result.Surname));
-                    return RedirectToAction("Index", new { id = result.UserID });
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(vm);
+        }
+        #endregion
+
+        #region Login
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(string email, string password)
+        {
+            if (ModelState.IsValid)
+            {
+                var hashedPassword = PasswordHasher.GetHashedPassword(password);
+                var users = _repository.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(hashedPassword)).ToList();
+
+                if (users.Count > 0)
+                {
+                    var user = users.FirstOrDefault();
+
+                    _logger.LogTrace(string.Format("{0} {1} succesfully logged in", user.Name, user.Surname));
+                    return RedirectToAction("Index", new { id = user.UserID });
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "User with this email address already exists.");
-                    _logger.LogError(string.Format("Could not register - user with email address: {0} already exists", vm.Email));
+                    ModelState.AddModelError(string.Empty, "Nieudane logowanie");
+                    _logger.LogError(string.Format("Could not log in - user with email: {0} not found", email));
                     return View();
                 }
             }
             return View();
         }
+        #endregion
     }
 }
