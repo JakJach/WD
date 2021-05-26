@@ -1,30 +1,27 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using WD.Data.Tools;
 using WD.Web.Models;
 using WD.Web.ViewModels;
 
 namespace WD.Web.Controllers
 {
-    public class UserController : Controller
+    public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        private readonly ILogger<UserController> _logger;
-        private readonly IWDWebRepository _repository;
+        private readonly ILogger<AccountController> _logger;
 
-        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
-                                ILogger<UserController> logger, IWDWebRepository repository)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
+                                ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
 
             _logger = logger;
-            _repository = repository;
         }
 
         #region Register
@@ -70,14 +67,19 @@ namespace WD.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel vm)
+        public async Task<IActionResult> Login(LoginViewModel vm, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
 
                 if (result.Succeeded)
-                    RedirectToAction("Index", "Home");
+                {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        Redirect(returnUrl);
+                    else
+                        RedirectToAction("Index", "Home");
+                }
 
                 ModelState.AddModelError("", "Nieudane logowanie!");
             }
@@ -90,7 +92,15 @@ namespace WD.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login", "User");
+            return RedirectToAction("Login", "Account");
+        }
+        #endregion
+
+        #region Error
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         #endregion
     }
