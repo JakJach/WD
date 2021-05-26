@@ -62,12 +62,13 @@ namespace VD.Web.Controllers
                 {
                     var user = users.FirstOrDefault();
 
+                    _logger.LogTrace(string.Format("{0} {1} succesfully logged in", user.Name, user.Surname));
                     return RedirectToAction("Index", new { id = user.UserID });
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Nieudane logowanie");
-                    _logger.LogInformation(string.Format("Home\t|Could not find user with email: {0}", email));
+                    _logger.LogError(string.Format("Could not log in - user with email: {0} not found", email));
                     return View();
                 }
             }
@@ -82,20 +83,23 @@ namespace VD.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(User _user)
+        public IActionResult Register(User user)
         {
             if (ModelState.IsValid)
             {
-                var check = _repository.Users.FirstOrDefault(u => u.Email == _user.Email);
+                var check = _repository.Users.FirstOrDefault(u => u.Email == user.Email);
                 if (check == null)
                 {
-                    _user.Password = PasswordHasher.GetHashedPassword(_user.Password);
-                    _repository.Users.Add(_user);
+                    user.Password = PasswordHasher.GetHashedPassword(user.Password);
+                    _repository.Users.Add(user);
+
+                    _logger.LogInformation(string.Format("New user {0} {1} registered", user.Name, user.Surname));
                     return RedirectToAction("Login");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "User with this email addres already exists.");
+                    ModelState.AddModelError(string.Empty, "User with this email address already exists.");
+                    _logger.LogError(string.Format("Could not register - user with email address: {0} already exists", user.Email));
                     return View();
                 }
             }
