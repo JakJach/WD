@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WD.Data.Models;
 
 namespace WD.Web.Models
 {
-    public partial class WDWebContext : DbContext
+    public partial class WDWebContext : IdentityDbContext
     {
         public WDWebContext(DbContextOptions<WDWebContext> options)
             : base(options)
