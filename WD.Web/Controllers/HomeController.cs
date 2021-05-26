@@ -75,50 +75,6 @@ namespace VD.Web.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Register(RegisterViewModel user)
-        {
-            if (ModelState.IsValid)
-            {
-                var check = _repository.Users.FirstOrDefault(u => u.Email == user.Email);
-                if (check == null)
-                {
-                    user.Password = PasswordHasher.GetHashedPassword(user.Password);
-
-                    User result = null;
-                    if (user.IsStudent)
-                    {
-                        var student = new Student(user);
-                        result = _repository.Add(student);
-                    }
-                    else if (user.IsTeacher)
-                    {
-                        var student = new Teacher(user);
-                        result = _repository.Add(student);
-                    }
-                    else
-                        result = _repository.Add(user);
-
-
-                    _logger.LogInformation(string.Format("New user {0} {1} registered", user.Name, user.Surname));
-                    return RedirectToAction("Index", new { id = result.UserID });
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "User with this email address already exists.");
-                    _logger.LogError(string.Format("Could not register - user with email address: {0} already exists", user.Email));
-                    return View();
-                }
-            }
-            return View();
-        }
-
         public IActionResult Logout()
         {
             return RedirectToAction("Login");

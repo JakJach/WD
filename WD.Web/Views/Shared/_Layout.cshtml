@@ -12,8 +12,15 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #d9534f;">
-            <div class="row align-self-end">
-                <a asp-action="logout" asp-controller="home" class="nav-link" style="color: #f7f7f7;">Wyloguj</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li>
+                        <a asp-action="register" asp-controller="user" class="nav-link" style="color: #f7f7f7;">Rejestracja</a>
+                    </li>
+                    <li>
+                        <a asp-action="logout" asp-controller="home" class="nav-link" style="color: #f7f7f7;">Wyloguj</a>
+                    </li>
+                </ul>
             </div>
         </nav>
         <div class="jumbotron text-center">
