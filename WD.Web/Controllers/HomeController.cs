@@ -82,8 +82,7 @@ namespace VD.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Register(User user)
+        public IActionResult Register(RegisterViewModel user)
         {
             if (ModelState.IsValid)
             {
@@ -91,10 +90,24 @@ namespace VD.Web.Controllers
                 if (check == null)
                 {
                     user.Password = PasswordHasher.GetHashedPassword(user.Password);
-                    _repository.Users.Add(user);
+
+                    User result = null;
+                    if (user.IsStudent)
+                    {
+                        var student = new Student(user);
+                        result = _repository.Add(student);
+                    }
+                    else if (user.IsTeacher)
+                    {
+                        var student = new Teacher(user);
+                        result = _repository.Add(student);
+                    }
+                    else
+                        result = _repository.Add(user);
+
 
                     _logger.LogInformation(string.Format("New user {0} {1} registered", user.Name, user.Surname));
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Index", new { id = result.UserID });
                 }
                 else
                 {

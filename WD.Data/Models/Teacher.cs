@@ -11,6 +11,17 @@ namespace WD.Data.Models
             ReviewedTheses = new HashSet<Thesis>();
         }
 
+        public Teacher(User user)
+        {
+            UserID = user.UserID;
+            Name = user.Name;
+            Surname = user.Surname;
+            Email = user.Email;
+            Password = user.Password;
+            CanBePromoter = true;
+            CanBeReviewer = true;
+        }
+
         public string Title { get; set; }
         public bool CanBePromoter { get; set; }
         public bool CanBeReviewer { get; set; }
