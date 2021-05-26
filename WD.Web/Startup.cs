@@ -27,7 +27,12 @@ namespace WD.Web
             services.AddDbContextPool<WDWebContext>(opt =>
                 opt.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+            })
                 .AddEntityFrameworkStores<WDWebContext>();
 
             services.AddControllersWithViews();

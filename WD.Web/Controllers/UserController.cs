@@ -41,7 +41,7 @@ namespace WD.Web.Controllers
             {
                 var user = new IdentityUser()
                 {
-                    UserName = string.Format("{0} {1}", vm.Name, vm.Surname),
+                    UserName = vm.Name + vm.Surname,
                     Email = vm.Email
                 };
 
@@ -70,28 +70,27 @@ namespace WD.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string email, string password)
+        public async Task<IActionResult> Login(LoginViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                var hashedPassword = PasswordHasher.GetHashedPassword(password);
-                var users = _repository.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(hashedPassword)).ToList();
+                var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
 
-                if (users.Count > 0)
-                {
-                    var user = users.FirstOrDefault();
+                if (result.Succeeded)
+                    RedirectToAction("Index", "Home");
 
-                    _logger.LogTrace(string.Format("{0} {1} succesfully logged in", user.Name, user.Surname));
-                    return RedirectToAction("Index", new { id = user.UserID });
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Nieudane logowanie");
-                    _logger.LogError(string.Format("Could not log in - user with email: {0} not found", email));
-                    return View();
-                }
+                ModelState.AddModelError("", "Nieudane logowanie!");
             }
-            return View();
+            return View(vm);
+        }
+        #endregion
+
+        #region Logout
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "User");
         }
         #endregion
     }
