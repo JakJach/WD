@@ -76,7 +76,7 @@ namespace WD.Web.Controllers
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(returnUrl))
-                        Redirect(returnUrl);
+                        LocalRedirect(returnUrl);
                     else
                         RedirectToAction("Index", "Home");
                 }
