@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using WD.Web.Models;
 using WD.Web.ViewModels;
 
 namespace WD.Web.Controllers
@@ -38,7 +37,7 @@ namespace WD.Web.Controllers
             {
                 var user = new IdentityUser()
                 {
-                    UserName = vm.Name + vm.Surname,
+                    UserName = vm.Email,
                     Email = vm.Email
                 };
 
@@ -81,7 +80,7 @@ namespace WD.Web.Controllers
                         RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError("", "Nieudane logowanie!");
+                ModelState.AddModelError("", "Login failed!");
             }
             return View(vm);
         }
@@ -103,5 +102,16 @@ namespace WD.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         #endregion
+
+        [AcceptVerbs("Get", "Post")]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+                return Json(true);
+            else
+                return Json($"Email {email} is already taken.");
+        }
     }
 }

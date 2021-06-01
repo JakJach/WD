@@ -12,7 +12,7 @@ namespace WD.Web.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Zapamiętaj mnie")]
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
     }
 }
