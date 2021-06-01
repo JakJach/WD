@@ -1,0 +1,25 @@
+﻿@model CreateRoleViewModel;
+@{
+    ViewData["Title"] = "Wirtualny Dziekanat AGH - Create New Role";
+}
+
+<div class="container">
+    <div id="login-row" class="row justify-content-center align-items-center">
+        <div id="login-column" class="col-md-6">
+            <div id="login-box" class="col-md-12">
+                <form method="post" asp-controller="Administration" asp-action="CreateRole" class="mt-3">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <h3 class="text-center text-dark">Create New Role:</h3>
+                    <div class="form-group">
+                        <label asp-for="RoleName" class="text-dark">Name:</label><br />
+                        <input type="text" asp-for="RoleName" class="form-control" />
+                        <span asp-validation-for="RoleName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-dark" value="Create" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -27,7 +27,6 @@ namespace VD.Web.Controllers
         }
 
         #region Index
-        [HttpGet]
         public IActionResult Index()
         {
             return View();
