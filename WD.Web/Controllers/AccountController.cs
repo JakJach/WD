@@ -46,7 +46,7 @@ namespace WD.Web.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
 
                 foreach (var error in result.Errors)
@@ -75,9 +75,9 @@ namespace WD.Web.Controllers
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(returnUrl))
-                        LocalRedirect(returnUrl);
+                        return LocalRedirect(returnUrl);
                     else
-                        RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError("", "Login failed!");
