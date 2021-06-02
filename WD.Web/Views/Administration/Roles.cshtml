@@ -1,0 +1,36 @@
+﻿@model IEnumerable<IdentityRole>
+@{
+    ViewData["Title"] = "Wirtualny Dziekanat AGH - Roles";
+}
+
+<h3>List of defined roles:</h3>
+
+@if (Model.Any())
+{
+    foreach (var role in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Role ID: @role.Id
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@role.Name</h5>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-dark" asp-controller="Administration" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+    <a class="btn btn-dark mb-3" asp-controller="Administration" asp-action="CreateRole">Create New Role</a>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">No roles created yet.</div>
+        <div class="card-body">
+            <h5 class="card-title">Use the button below to create a new role.</h5>
+            <a class="btn btn-dark" asp-controller="Administration" asp-action="CreateRole">Create Role</a>
+        </div>
+    </div>
+}
