@@ -95,6 +95,14 @@ namespace WD.Web.Controllers
         }
         #endregion
 
+        #region Access Denied
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+        #endregion
+
         #region Error
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

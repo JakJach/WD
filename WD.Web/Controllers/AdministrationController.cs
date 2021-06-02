@@ -7,7 +7,7 @@ using WD.Web.ViewModels;
 
 namespace WD.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

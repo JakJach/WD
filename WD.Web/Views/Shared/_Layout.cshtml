@@ -17,11 +17,19 @@
     <div class="container">
         <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #d9534f;">
             <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                    {
+                        <li class="nav-item">
+                            <a asp-controller="Administration" asp-action="Roles" class="nav-link">Manage User Roles</a>
+                        </li>
+                    }
+                </ul>
                 <ul class="navbar-nav ml-auto">
                     @if (signInManager.IsSignedIn(User))
                     {
                         <li class="nav-item">
-                            <form method="post" asp-action="Logout" asp-controller="Account">
+                            <form method="post" asp-controller="Account" asp-action="Logout" >
                                 <button type="submit" class="nav-link btn btn-link py-0" style="width: auto">
                                     Log Out @User.Identity.Name
                                 </button>
@@ -30,11 +38,11 @@
                     }
                     else
                     {
-                        <li>
-                            <a asp-action="Register" asp-controller="Account" class="nav-link" style="color: #f7f7f7;">Register</a>
+                        <li class="nav-item">
+                            <a asp-controller="Account" asp-action="Register" class="nav-link" style="color: #f7f7f7;">Register</a>
                         </li>
-                        <li>
-                            <a asp-action="Login" asp-controller="Account" class="nav-link" style="color: #f7f7f7;">Log In</a>
+                        <li class="nav-item">
+                            <a asp-controller="Account" asp-action="Login" class="nav-link" style="color: #f7f7f7;">Log In</a>
                         </li>
                     }
 
