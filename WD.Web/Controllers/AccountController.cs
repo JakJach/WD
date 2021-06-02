@@ -45,6 +45,9 @@ namespace WD.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                        return RedirectToAction("Users", "Administration");
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
