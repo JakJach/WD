@@ -30,19 +30,6 @@
                         <input type="password" asp-for="Password" class="form-control" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                    <div class="form=group">
-                        <label class="text-dark">User type:</label>
-                        <div class="d-flex">
-                            <div class="form-check m-1">
-                                <input type="checkbox" asp-for="IsStudent" class="form-check-input" checked />
-                                <label asp-for="IsStudent" class="text-dark form-check-label">Student</label>
-                            </div>
-                            <div class="form-check m-1">
-                                <input type="checkbox" asp-for="IsTeacher" class="form-check-input" />
-                                <label asp-for="IsTeacher" class="text-dark form-check-label">Teacher</label>
-                            </div>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-dark" value="Register" />
                     </div>

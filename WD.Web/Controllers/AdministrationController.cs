@@ -19,6 +19,7 @@ namespace WD.Web.Controllers
             _userManager = userManager;
         }
 
+        #region Create Role
         [HttpGet]
         public IActionResult CreateRole()
         {
@@ -43,6 +44,7 @@ namespace WD.Web.Controllers
 
             return View(model);
         }
+        #endregion
 
         [HttpGet]
         public IActionResult Roles()
@@ -51,6 +53,7 @@ namespace WD.Web.Controllers
             return View(roles);
         }
 
+        #region Edit Role
         [HttpGet]
         public async Task<IActionResult> EditRole(string id)
         {
@@ -107,7 +110,9 @@ namespace WD.Web.Controllers
 
             return View(model);
         }
+        #endregion
 
+        #region Edit Role Users
         [HttpGet]
         public async Task<IActionResult> EditRoleUsers(string roleId)
         {
@@ -174,6 +179,14 @@ namespace WD.Web.Controllers
             }
 
             return RedirectToAction("EditRole", "Administration", new { Id = roleID });
+        }
+        #endregion
+
+        [HttpGet]
+        public IActionResult Users()
+        {
+            var users = _userManager.Users;
+            return View(users);
         }
     }
 }

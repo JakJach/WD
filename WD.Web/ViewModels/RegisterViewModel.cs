@@ -21,7 +21,5 @@ namespace WD.Web.ViewModels
         [ValidEmailDomain("agh.edu.pl", "student.agh.edu.pl",
             ErrorMessage = "Email domain must be agh.edu.pl or student.agh.edu.pl")]
         public string Email { get; set; }
-        public bool IsStudent { get; set; }
-        public bool IsTeacher { get; set; }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<IdentityUser>
+@{
+    ViewData["Title"] = ViewData["Title"] = "AGH VD | ADMIN | Users";
+}
+
+<div class="text-center">
+    <h3>List of registered users:</h3>
+
+    @if (Model.Any())
+    {
+        @foreach (var user in Model)
+        {
+            <div class="card mb-3 text-left">
+                <div class="card-header">
+                    User ID: @user.Id
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@user.UserName</h5>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-dark">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        }
+        <a asp-controller="Account" asp-action="Register" class="btn btn-dark mb-3">Register new user</a>
+    }
+    else
+    {
+        <div class="card text-left">
+            <div class="card-header">
+                No users registered yet.
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Use the below button to register a user:</h5>
+                <a class="btn btn-dark" asp-controller="Account" asp-action="Register">Register</a>
+            </div>
+        </div>
+    }
+</div>
