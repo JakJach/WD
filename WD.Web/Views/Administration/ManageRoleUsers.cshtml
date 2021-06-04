@@ -1,4 +1,4 @@
-﻿@model List<RoleUserViewModel>
+﻿@model List<ManageRoleUsersViewModel>
 @{
     ViewData["Title"] = "AGH VD | ADMIN | Edit Role Users";
 }
@@ -23,6 +23,7 @@
                     </label>
                 </div>
             }
+            <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <div class="card-footer">
             <input type="submit" value="Update" class="btn btn-dark" />

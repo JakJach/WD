@@ -1,5 +1,98 @@
-﻿@{
+﻿@model IndexViewModel
+@{
     ViewData["Title"] = "Wirtualny Dziekanat";
 }
 
-<h3>Hello!</h3>
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link text-white active" id="nav-projects-tab" href="#projects" style="background-color: #5cb85c" data-toggle="tab" role="tab" aria-controls="projects" aria-selected="true">Projects</a>
+                <a class="nav-item nav-link text-white" id="nav-thesis-tab" href="#theses" style="background-color: #292b2c" data-toggle="tab" role="tab" aria-controls="thesis" aria-selected="false">Theses</a>
+                <a class="nav-item nav-link text-white" id="nav-notes-tab" href="#classes" style="background-color: #d9534f" data-toggle="tab" role="tab" aria-controls="classes" aria-selected="false">Classes</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="projects" role="tabpanel" aria-labelledby="nav-projects-tab">
+                <table class="table" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Classes</th>
+                            <th>Title</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var project in Model.Projects)
+                        {
+                            <tr>
+                                <td>@project.Class.Name ?? "---"</td>
+                                <td>@project.Title</td>
+                                @if (project.IsSubmitted)
+                                {
+                                    @if (project.IsReviewed)
+                                    {
+                                        @if (project.Note < 3)
+                                        {
+                                            <td class="text-danger">Project was not passed.</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-success">Project passed.<br />Note: @project.Note</td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td class="text-dark">Project has not been reviewed yet.</td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td><a class="btn btn-dark" asp-controller="Student" asp-action="AddProject" asp-route-id="@project.ProjectId">Submit project</a></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div id="theses" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-thesis-tab">
+                <table class="table" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Thesis Title</th>
+                            <th>Thesis Goal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var thesis in Model.Theses)
+                        {
+                            <tr>
+                                <td>@thesis.Title</td>
+                                <td>@thesis.Goal</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div id="classes" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-notes-tab">
+                <table class="table" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Class Name</th>
+                            <th>Number of Students</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Class classes in Model.Classes)
+                        {
+                            <tr>
+                                <td>@classes.Name</td>
+                                <td>@classes.FinalNote.Count</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 ﻿namespace WD.Web.ViewModels
 {
-    public class RoleUserViewModel
+    public class ManageRoleUsersViewModel
     {
         public string UserID { get; set; }
         public string UserName { get; set; }

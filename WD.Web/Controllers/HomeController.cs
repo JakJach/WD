@@ -30,7 +30,14 @@ namespace VD.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var model = new IndexViewModel()
+            {
+                Classes = _repository.Classes,
+                Projects = _repository.Projects,
+                Theses = _repository.Theses,
+                Files = _repository.Files
+            };
+            return View(model);
         }
         #endregion
 

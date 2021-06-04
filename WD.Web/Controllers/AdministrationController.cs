@@ -156,9 +156,9 @@ namespace WD.Web.Controllers
         }
         #endregion
 
-        #region Edit Role Users
+        #region Manage Role Users
         [HttpGet]
-        public async Task<IActionResult> EditRoleUsers(string roleId)
+        public async Task<IActionResult> ManageRoleUsers(string roleId)
         {
             ViewBag.roleID = roleId;
 
@@ -170,11 +170,11 @@ namespace WD.Web.Controllers
                 return View("NotFound");
             }
 
-            var model = new List<RoleUserViewModel>();
+            var model = new List<ManageRoleUsersViewModel>();
 
             foreach (var user in _userManager.Users)
             {
-                var roleUser = new RoleUserViewModel()
+                var roleUser = new ManageRoleUsersViewModel()
                 {
                     UserID = user.Id,
                     UserName = user.UserName
@@ -192,7 +192,7 @@ namespace WD.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRoleUsers(List<RoleUserViewModel> model, string roleID)
+        public async Task<IActionResult> ManageRoleUsers(List<ManageRoleUsersViewModel> model, string roleID)
         {
             var role = await _roleManager.FindByIdAsync(roleID);
 
@@ -311,6 +311,73 @@ namespace WD.Web.Controllers
 
                 return View("Users");
             }
+        }
+        #endregion
+
+        #region Manage User Roles
+        [HttpGet]
+        public async Task<IActionResult> ManageUserRoles(string userId)
+        {
+            ViewBag.UserID = userId;
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with ID = {userId} was not found";
+                return View("NotFound");
+            }
+
+            var model = new List<ManageUserRolesViewModel>();
+
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRole = new ManageUserRolesViewModel()
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                    userRole.IsSelected = true;
+                else
+                    userRole.IsSelected = false;
+
+                model.Add(userRole);
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageUserRoles(List<ManageUserRolesViewModel> model, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with ID = {userId} was not found";
+                return View("NotFound");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, roles);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot remove this user's roles");
+                return View(model);
+            }
+
+            result = await _userManager.AddToRolesAsync(user, model.Where(r => r.IsSelected).Select(r => r.RoleName));
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot add new roles to this user");
+                return View(model);
+            }
+
+            return RedirectToAction("EditUser", "Administration", new { Id = userId });
         }
         #endregion
     }
