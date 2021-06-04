@@ -8,7 +8,6 @@ namespace WD.Data.Models
         public Project()
         {
             Files = new HashSet<File>();
-            Students = new HashSet<Student>();
         }
 
         public int ProjectId { get; set; }
@@ -25,7 +24,6 @@ namespace WD.Data.Models
         public int ClassId { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
-        public virtual ICollection<Student> Students { get; set; }
         public virtual Class Class { get; set; }
     }
 }

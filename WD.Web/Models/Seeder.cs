@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using WD.Data.Models;
-using WD.Data.Tools;
 
 namespace WD.Web.Models
 {
@@ -9,57 +8,6 @@ namespace WD.Web.Models
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Student>().HasData(
-                new Student
-                {
-                    UserID = 1,
-                    Name = "Jakub",
-                    Surname = "Jachowicz",
-                    Email = "jakjach@student.agh.edu.pl",
-                    Password = PasswordHasher.GetHashedPassword("jakjach"),
-                    HasThesis = true
-                },
-                new Student
-                {
-                    UserID = 2,
-                    Name = "Alex",
-                    Surname = "Białas",
-                    Email = "alexbial@student.agh.edu.pl",
-                    Password = PasswordHasher.GetHashedPassword("alexbial"),
-                    HasThesis = true
-                },
-                new Student
-                {
-                    UserID = 3,
-                    Name = "Mateusz",
-                    Surname = "Kasprzak",
-                    Email = "matkas@student.agh.edu.pl",
-                    Password = PasswordHasher.GetHashedPassword("matkas"),
-                    HasThesis = true
-                });
-
-            modelBuilder.Entity<Teacher>().HasData(
-                new Teacher
-                {
-                    UserID = 4,
-                    Name = "Paweł",
-                    Surname = "Rotter",
-                    CanBePromoter = true,
-                    CanBeReviewer = true,
-                    Email = "rotter@agh.edu.pl",
-                    Password = PasswordHasher.GetHashedPassword("rotter")
-                },
-                new Teacher
-                {
-                    UserID = 5,
-                    Name = "Jerzy",
-                    Surname = "Baranowski",
-                    CanBePromoter = true,
-                    CanBeReviewer = true,
-                    Email = "baranowski@agh.edu.pl",
-                    Password = PasswordHasher.GetHashedPassword("baranowski")
-                });
-
             modelBuilder.Entity<Class>().HasData(
                 new Class
                 {
@@ -92,7 +40,6 @@ namespace WD.Web.Models
             modelBuilder.Entity<Thesis>().HasData(
                 new Thesis
                 {
-                    StudentId = 1,
                     SubmissionDate = null,
                     AcceptationDate = null,
                     CreationDate = DateTime.Now,
@@ -103,8 +50,6 @@ namespace WD.Web.Models
                     TakeDate = DateTime.Now,
                     ReviewDate = null,
                     Review = null,
-                    PromoterId = 4,
-                    ReviewerId = 5,
                     PromoterNote = null,
                     ReviewerNote = null,
                     PromoterOpinion = null,

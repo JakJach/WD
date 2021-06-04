@@ -33,8 +33,5 @@ namespace WD.Data.Models
         public int? ReviewerId { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
-        public virtual Student Student { get; set; }
-        public virtual Teacher Promoter { get; set; }
-        public virtual Teacher Reviewer { get; set; }
     }
 }
