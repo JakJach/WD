@@ -75,7 +75,7 @@
             }
         </div>
         <div class="card-footer">
-            <a href="#" class="btn btn-dark">Manage</a>
+            <a asp-controller="Administration" asp-action="ManageUserClaims" asp-route-userID="@Model.Id" class="btn btn-dark">Manage</a>
         </div>
     </div>
 </form>

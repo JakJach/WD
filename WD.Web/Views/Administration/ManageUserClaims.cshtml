@@ -1,0 +1,32 @@
+﻿@model List<ManageUserClaimsViewModel>
+@{
+    ViewData["Title"] = "AGH VD | ADMIN | Edit User Claims";
+}
+@{
+    var userID = ViewBag.UserID;
+}
+
+<form method="post">
+    <div class="card">
+        <div class="card-header">
+            <h3>Add or remove claims for this user:</h3>
+        </div>
+        <div class="card-body">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check m-1">
+                    <input asp-for="@Model[i].ClaimType" type="hidden" />
+                    <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                    <label asp-for="@Model[i].IsSelected" class="form-check-label">
+                        @Model[i].ClaimType
+                    </label>
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Update" class="btn btn-dark" />
+            <a asp-controller="Administration" asp-action="EditUser" asp-route-id="@userID" class="btn btn-dark">Cancel</a>
+        </div>
+    </div>
+</form>

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WD.Web.Models;
 using WD.Web.ViewModels;
 
 namespace WD.Web.Controllers
@@ -374,6 +375,71 @@ namespace WD.Web.Controllers
             if (!result.Succeeded)
             {
                 ModelState.AddModelError("", "Cannot add new roles to this user");
+                return View(model);
+            }
+
+            return RedirectToAction("EditUser", "Administration", new { Id = userId });
+        }
+        #endregion
+
+        #region Manage User Roles
+        [HttpGet]
+        public async Task<IActionResult> ManageUserClaims(string userId)
+        {
+            ViewBag.UserID = userId;
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with ID = {userId} was not found";
+                return View("NotFound");
+            }
+
+            var model = new List<ManageUserClaimsViewModel>();
+
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            foreach (var claim in Claims.AllClaims)
+            {
+                var userClaim = new ManageUserClaimsViewModel()
+                {
+                    ClaimType = claim.Type,
+                    IsSelected = claims.Any(c => c.Type == claim.Type)
+                };
+
+                model.Add(userClaim);
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageUserClaims(List<ManageUserClaimsViewModel> model, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with ID = {userId} was not found";
+                return View("NotFound");
+            }
+
+            var claims = await _userManager.GetClaimsAsync(user);
+            var result = await _userManager.RemoveClaimsAsync(user, claims);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot remove this user's claims");
+                return View(model);
+            }
+
+            var claimsToAdd = Claims.AllClaims.Where(c => model.Where(c => c.IsSelected).Select(c => c.ClaimType).ToList().Contains(c.Type));
+            result = await _userManager.AddClaimsAsync(user, claimsToAdd);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot add new claims to this user");
                 return View(model);
             }
 
