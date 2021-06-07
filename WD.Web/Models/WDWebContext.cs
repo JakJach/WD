@@ -15,13 +15,19 @@ namespace WD.Web.Models
         {
             modelBuilder.Entity<Class>().ToTable("Classes");
 
+            modelBuilder.Entity<File>().ToTable("Files");
+
             modelBuilder.Entity<Project>().ToTable("Projects");
+
+            modelBuilder.Entity<ProjectFile>().ToTable("ProjectFiles").HasNoKey();
+
+            modelBuilder.Entity<ProjectStudent>().ToTable("ProjectStudents").HasNoKey();
+
+            modelBuilder.Entity<StudentClass>().ToTable("StudentClasses").HasNoKey();
 
             modelBuilder.Entity<Thesis>().ToTable("Theses");
 
-            modelBuilder.Entity<File>().ToTable("Files");
-
-            modelBuilder.Entity<FinalNote>().ToTable("FinalNotes").HasKey(fn => fn.NoteId);
+            modelBuilder.Entity<ThesisFile>().ToTable("ThesisFiles").HasNoKey();
 
             modelBuilder.Seed();
 
@@ -29,9 +35,12 @@ namespace WD.Web.Models
         }
 
         public virtual DbSet<Class> Classes { get; set; }
-        public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<Thesis> Theses { get; set; }
         public virtual DbSet<File> Files { get; set; }
-        public virtual DbSet<FinalNote> FinalNotes { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectFile> ProjectFiles { get; set; }
+        public virtual DbSet<ProjectStudent> ProjectStudents { get; set; }
+        public virtual DbSet<StudentClass> StudentClasses { get; set; }
+        public virtual DbSet<Thesis> Theses { get; set; }
+        public virtual DbSet<ThesisFile> ThesisFiles { get; set; }
     }
 }

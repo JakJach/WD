@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace WD.Data.Models
 {
     public partial class Project
     {
-        public Project()
-        {
-            Files = new HashSet<File>();
-        }
-
         public int ProjectId { get; set; }
         public float? Note { get; set; }
         public string Review { get; set; }
@@ -22,8 +16,5 @@ namespace WD.Data.Models
         public DateTime CreationDate { get; set; }
         public string Title { get; set; }
         public int ClassId { get; set; }
-
-        public virtual ICollection<File> Files { get; set; }
-        public virtual Class Class { get; set; }
     }
 }

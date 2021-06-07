@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace WD.Data.Models
 {
     public partial class Thesis
     {
-        public Thesis()
-        {
-            Files = new HashSet<File>();
-        }
-
         public int ThesisId { get; set; }
         public float? PromoterNote { get; set; }
         public float? ReviewerNote { get; set; }
@@ -28,10 +22,8 @@ namespace WD.Data.Models
         public string Scope { get; set; }
         public string Goal { get; set; }
         public string StudentQualifications { get; set; }
-        public int? StudentId { get; set; }
-        public int PromoterId { get; set; }
-        public int? ReviewerId { get; set; }
-
-        public virtual ICollection<File> Files { get; set; }
+        public string StudentId { get; set; }
+        public string PromoterId { get; set; }
+        public string ReviewerId { get; set; }
     }
 }

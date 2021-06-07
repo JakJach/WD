@@ -26,7 +26,7 @@
                         @foreach (var project in Model.Projects)
                         {
                             <tr>
-                                <td>@project.Class.Name ?? "---"</td>
+                                <td>@project.ClassId ?? "---"</td>
                                 <td>@project.Title</td>
                                 @if (project.IsSubmitted)
                                 {
@@ -79,7 +79,7 @@
                     <thead>
                         <tr>
                             <th>Class Name</th>
-                            <th>Number of Students</th>
+                            <th>Teacher ID</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,7 +87,7 @@
                         {
                             <tr>
                                 <td>@classes.Name</td>
-                                <td>@classes.FinalNote.Count</td>
+                                <td>@classes.TeacherId</td>
                             </tr>
                         }
                     </tbody>

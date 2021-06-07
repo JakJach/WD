@@ -29,10 +29,7 @@ namespace WD.Web.Models
                     ClassId = 1,
                     IsReviewed = false,
                     IsSubmitted = false,
-                    SubmissionDate = null,
-                    ReviewDate = null,
                     Review = null,
-                    Note = null,
                     Scope = "Wykonanie aplikacji webowej obsługującej wirtualny dziekanat uczelni wyższej",
                     Goal = "Działająca i przetestowana aplikacja z funkcjonalnościami: dodawania ocen, oddawania projektów, składania pracy dyplomowej"
                 });
@@ -40,18 +37,13 @@ namespace WD.Web.Models
             modelBuilder.Entity<Thesis>().HasData(
                 new Thesis
                 {
-                    SubmissionDate = null,
-                    AcceptationDate = null,
                     CreationDate = DateTime.Now,
                     IsAccepted = false,
                     IsReviewed = false,
                     IsSubmitted = false,
                     IsTaken = true,
                     TakeDate = DateTime.Now,
-                    ReviewDate = null,
                     Review = null,
-                    PromoterNote = null,
-                    ReviewerNote = null,
                     PromoterOpinion = null,
                     Title = "Wtyczka VST realizująca proces masteringu poprzez autmoatyczne dopasowanie korektora EQ",
                     Goal = "Wykonanie działającej  i gotowej do użycia wtyczki",
