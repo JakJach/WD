@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WD.Data.Models;
 using WD.Web.Models;
 using WD.Web.ViewModels;
 
@@ -466,5 +468,49 @@ namespace WD.Web.Controllers
 
             return View(courses);
         }
+
+        #region Create Course
+        [HttpGet]
+        public async Task<IActionResult> CreateCourse()
+        {
+            var teachers = await _userManager.GetUsersInRoleAsync("Teacher");
+            List<SelectListItem> options = new List<SelectListItem>();
+            foreach (var t in teachers)
+            {
+                options.Add(new SelectListItem(t.UserName, t.Id));
+            }
+            var model = new CreateCourseViewModel()
+            {
+                Teachers = options
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateCourse(CreateCourseViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Course course = new Course()
+                {
+                    Name = model.Name,
+                    TeacherId = model.SelectedTeacher
+                };
+
+                var result = _repository.Add(course);
+
+                if (result != null)
+                    return RedirectToAction("Courses", "Administration");
+
+                ModelState.AddModelError("", "Could not create specified course");
+            }
+
+            return View(model);
+        }
+        #endregion
+
+        #region Edit Course
+
+        #endregion
     }
 }
