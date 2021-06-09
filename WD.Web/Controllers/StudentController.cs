@@ -43,13 +43,13 @@ namespace WD.Web.Controllers
                 return View("NotFound");
             }
 
-            var studentClasses = _repository.StudentClasses.Where(sc => sc.StudentId == student.Id);
+            var studentClasses = _repository.StudentCourses.Where(sc => sc.StudentId == student.Id);
             List<StudentFinalNote> finalNotes = new List<StudentFinalNote>();
             foreach (var sc in studentClasses)
             {
-                Class c = _repository.Classes.Where(c => c.ClassId == sc.ClassId).FirstOrDefault();
+                Course c = _repository.Courses.Where(c => c.CourseId == sc.CourseId).FirstOrDefault();
                 var teacher = await _userManager.FindByIdAsync(c.TeacherId);
-                finalNotes.Add(new StudentFinalNote() { FinalNote = sc.FinalNote, ClassName = c.Name, Teacher = teacher.UserName });
+                finalNotes.Add(new StudentFinalNote() { FinalNote = sc.FinalNote, CourseName = c.Name, Teacher = teacher.UserName });
             }
 
             var studentProjects = _repository.ProjectStudents.Where(ps => ps.StudentId == student.Id);

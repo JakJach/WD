@@ -15,6 +15,6 @@ namespace WD.Data.Models
         public DateTime? ReviewDate { get; set; }
         public DateTime CreationDate { get; set; }
         public string Title { get; set; }
-        public int ClassId { get; set; }
+        public int CourseId { get; set; }
     }
 }

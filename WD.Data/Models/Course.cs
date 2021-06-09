@@ -1,8 +1,8 @@
 ﻿namespace WD.Data.Models
 {
-    public partial class Class
+    public partial class Course
     {
-        public int ClassId { get; set; }
+        public int CourseId { get; set; }
         public string Name { get; set; }
         public string TeacherId { get; set; }
     }

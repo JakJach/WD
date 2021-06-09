@@ -2,7 +2,7 @@
 {
     public class StudentFinalNote
     {
-        public string ClassName { get; set; }
+        public string CourseName { get; set; }
         public string Teacher { get; set; }
         public float? FinalNote { get; set; }
     }

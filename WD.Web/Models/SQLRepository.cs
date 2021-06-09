@@ -14,27 +14,27 @@ namespace WD.Web.Models
             _context = context;
         }
 
-        public StudentClass Add(StudentClass finalNote)
+        public StudentCourses Add(StudentCourses finalNote)
         {
-            _context.StudentClasses.Add(finalNote);
+            _context.StudentCourses.Add(finalNote);
             _context.SaveChanges();
             return finalNote;
         }
 
-        public StudentClass Delete(StudentClass finalNote)
+        public StudentCourses Delete(StudentCourses finalNote)
         {
-            var fn = _context.StudentClasses.Find(finalNote);
+            var fn = _context.StudentCourses.Find(finalNote);
             if (fn != null)
             {
-                _context.StudentClasses.Remove(fn);
+                _context.StudentCourses.Remove(fn);
                 _context.SaveChanges();
             }
             return fn;
         }
 
-        public StudentClass Update(StudentClass finalNote)
+        public StudentCourses Update(StudentCourses finalNote)
         {
-            var fn = _context.StudentClasses.Attach(finalNote);
+            var fn = _context.StudentCourses.Attach(finalNote);
             fn.State = EntityState.Modified;
             _context.SaveChanges();
             return finalNote;
@@ -66,30 +66,30 @@ namespace WD.Web.Models
             return project;
         }
 
-        public Class Add(Class _class)
+        public Course Add(Course course)
         {
-            _context.Classes.Add(_class);
+            _context.Courses.Add(course);
             _context.SaveChanges();
-            return _class;
+            return course;
         }
 
-        public Class Delete(Class _class)
+        public Course Delete(Course course)
         {
-            var c = _context.Classes.Find(_class);
+            var c = _context.Courses.Find(course);
             if(c != null)
             {
-                _context.Classes.Remove(c);
+                _context.Courses.Remove(c);
                 _context.SaveChanges();
             }
             return c;
         }
 
-        public Class Update(Class _class)
+        public Course Update(Course course)
         {
-            var c = _context.Classes.Attach(_class);
+            var c = _context.Courses.Attach(course);
             c.State = EntityState.Modified;
             _context.SaveChanges();
-            return _class;
+            return course;
         }
 
         public Thesis Add(Thesis thesis)
@@ -222,11 +222,11 @@ namespace WD.Web.Models
             return thesisFile;
         }
 
-        public IList<StudentClass> StudentClasses => _context.StudentClasses.ToList();
+        public IList<StudentCourses> StudentCourses => _context.StudentCourses.ToList();
 
         public IList<Project> Projects => _context.Projects.ToList();
 
-        public IList<Class> Classes => _context.Classes.ToList();
+        public IList<Course> Courses => _context.Courses.ToList();
 
         public IList<Thesis> Theses => _context.Theses.ToList();
 

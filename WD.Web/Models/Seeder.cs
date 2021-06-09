@@ -8,15 +8,15 @@ namespace WD.Web.Models
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Class>().HasData(
-                new Class
+            modelBuilder.Entity<Course>().HasData(
+                new Course
                 {
-                    ClassId = 1,
+                    CourseId = 1,
                     Name = "Laboratorium Specjalizacyjne"
                 },
-                new Class
+                new Course
                 {
-                    ClassId = 2,
+                    CourseId = 2,
                     Name = "Seminarium Dyplomowe"
                 });
 
@@ -26,7 +26,7 @@ namespace WD.Web.Models
                     ProjectId = 1,
                     Title = "Wirtualny Dziekanat",
                     CreationDate = DateTime.Now,
-                    ClassId = 1,
+                    CourseId = 1,
                     IsReviewed = false,
                     IsSubmitted = false,
                     Review = null,

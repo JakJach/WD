@@ -13,7 +13,7 @@ namespace WD.Web.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Class>().ToTable("Classes");
+            modelBuilder.Entity<Course>().ToTable("Courses");
 
             modelBuilder.Entity<File>().ToTable("Files");
 
@@ -23,7 +23,7 @@ namespace WD.Web.Models
 
             modelBuilder.Entity<ProjectStudent>().ToTable("ProjectStudents").HasNoKey();
 
-            modelBuilder.Entity<StudentClass>().ToTable("StudentClasses").HasNoKey();
+            modelBuilder.Entity<StudentCourses>().ToTable("StudentCourses").HasNoKey();
 
             modelBuilder.Entity<Thesis>().ToTable("Theses");
 
@@ -34,12 +34,12 @@ namespace WD.Web.Models
             base.OnModelCreating(modelBuilder);
         }
 
-        public virtual DbSet<Class> Classes { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectFile> ProjectFiles { get; set; }
         public virtual DbSet<ProjectStudent> ProjectStudents { get; set; }
-        public virtual DbSet<StudentClass> StudentClasses { get; set; }
+        public virtual DbSet<StudentCourses> StudentCourses { get; set; }
         public virtual DbSet<Thesis> Theses { get; set; }
         public virtual DbSet<ThesisFile> ThesisFiles { get; set; }
     }

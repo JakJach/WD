@@ -5,18 +5,18 @@ namespace WD.Web.Models
 {
     public interface IWDWebRepository
     {
-        IList<Class> Classes { get; }
+        IList<Course> Courses { get; }
         IList<File> Files { get; }
         IList<Project> Projects { get; }
         IList<ProjectFile> ProjectFiles { get; }
         IList<ProjectStudent> ProjectStudents { get; }
-        IList<StudentClass> StudentClasses { get; }
+        IList<StudentCourses> StudentCourses { get; }
         IList<Thesis> Theses { get; }
         IList<ThesisFile> ThesisFiles { get; }
 
-        Class Add(Class _class);
-        Class Delete(Class _class);
-        Class Update(Class _class);
+        Course Add(Course course);
+        Course Delete(Course course);
+        Course Update(Course course);
 
         File Add(File file);
         File Delete(File file);
@@ -34,9 +34,9 @@ namespace WD.Web.Models
         ProjectStudent Delete(ProjectStudent projectStudent);
         ProjectStudent Update(ProjectStudent projectStudent);
 
-        StudentClass Add(StudentClass studentClass);
-        StudentClass Delete(StudentClass studentClass);
-        StudentClass Update(StudentClass studentClass);
+        StudentCourses Add(StudentCourses studentCourse);
+        StudentCourses Delete(StudentCourses studentCourse);
+        StudentCourses Update(StudentCourses studentCourse);
 
         Thesis Add(Thesis thesis);
         Thesis Delete(Thesis thesis);

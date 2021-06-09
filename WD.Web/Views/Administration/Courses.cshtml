@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CourseViewModel>
+@{
+    ViewData["Title"] = "AGH VD | ADMIN | Courses";
+}
+
+<div class="text-center">
+    <h3>List of existing courses:</h3>
+
+    @if (Model.Any())
+    {
+        foreach (var course in Model)
+        {
+            <div class="card mb-3 text-left">
+                <div class="card-header">
+                    Course ID: @course.CourseId
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@course.Name</h5>
+                    <h6 class="card-title">Teacher: @course.Teacher</h6>
+                </div>
+                <div class="card-footer">
+                    <form asp-controller="Administration" asp-action="DeleteCourse" asp-route-id="@course.CourseId" method="post">
+                        <a asp-controller="Administration" asp-action="EditCourse" asp-route-id="@course.CourseId" class="btn btn-dark">Edit</a>
+                        <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this course: @course.Name')">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+        <a class="btn btn-dark mb-3" asp-controller="Administration" asp-action="CreateCourse">Create New Course</a>
+    }
+    else
+    {
+        <div class="card text-left">
+            <div class="card-header">No courses created yet.</div>
+            <div class="card-body">
+                <h5 class="card-title">Use the button below to create a new course.</h5>
+                <a class="btn btn-dark" asp-controller="Administration" asp-action="CreateCourse">Create Course</a>
+            </div>
+        </div>
+    }
+</div>

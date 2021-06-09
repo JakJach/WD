@@ -17,14 +17,23 @@ namespace WD.Web.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<AdministrationController> _logger;
+        private readonly IWDWebRepository _repository;
 
         public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager,
-                                        ILogger<AdministrationController> logger)
+                                        ILogger<AdministrationController> logger, IWDWebRepository repository)
         {
             _roleManager = roleManager;
             _userManager = userManager;
 
             _logger = logger;
+            _repository = repository;
+        }
+
+        [HttpGet]
+        public IActionResult Roles()
+        {
+            var roles = _roleManager.Roles;
+            return View(roles);
         }
 
         #region Create Role
@@ -53,13 +62,6 @@ namespace WD.Web.Controllers
             return View(model);
         }
         #endregion
-
-        [HttpGet]
-        public IActionResult Roles()
-        {
-            var roles = _roleManager.Roles;
-            return View(roles);
-        }
 
         #region Edit Role
         [HttpGet]
@@ -382,7 +384,7 @@ namespace WD.Web.Controllers
         }
         #endregion
 
-        #region Manage User Roles
+        #region Manage User Claims
         [HttpGet]
         public async Task<IActionResult> ManageUserClaims(string userId)
         {
@@ -446,5 +448,23 @@ namespace WD.Web.Controllers
             return RedirectToAction("EditUser", "Administration", new { Id = userId });
         }
         #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> Courses()
+        {
+            var courses = new List<CourseViewModel>();
+
+            foreach (var course in _repository.Courses)
+            {
+                courses.Add(new CourseViewModel()
+                {
+                    CourseId = course.CourseId,
+                    Name = course.Name,
+                    Teacher = course.TeacherId != null ? (await _userManager.FindByIdAsync(course.TeacherId)).UserName : "Teacher not assigned"
+                });
+            }
+
+            return View(courses);
+        }
     }
 }
