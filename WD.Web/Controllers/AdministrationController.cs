@@ -510,7 +510,69 @@ namespace WD.Web.Controllers
         #endregion
 
         #region Edit Course
+        [HttpGet]
+        public async Task<IActionResult> EditCourse(int id)
+        {
+            var course = _repository.Courses.Where(c => c.CourseId == id).FirstOrDefault();
 
+            if (course == null)
+            {
+                ViewBag.ErrorMessage = $"Course with ID = {id} was not found";
+                return View("NotFound");
+            }
+
+            var teacher = await _userManager.FindByIdAsync(course.TeacherId);
+
+            var model = new EditCourseViewModel()
+            {
+                Id = course.CourseId,
+                Name = course.Name,
+                SelectedTeacher = teacher?.UserName,
+                SelectedTeacherId = teacher?.Id
+            };
+
+            var teachers = await _userManager.GetUsersInRoleAsync("Teacher");
+            foreach (var t in teachers)
+            {
+                model.Teachers.Add(new SelectListItem(t.UserName, t.Id));
+            }
+
+            var studentIds = _repository.StudentCourses.Where(sc => sc.CourseId == course.CourseId).Select(sc => sc.StudentId);
+
+            foreach (var student in studentIds)
+            {
+                model.Students.Add((await _userManager.FindByIdAsync(student)).UserName);
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditCourse(EditCourseViewModel model)
+        {
+            var course = _repository.Courses.Where(c => c.CourseId == model.Id).FirstOrDefault();
+
+            if (course == null)
+            {
+                ViewBag.ErrorMessage = $"Course with ID = {model.Id} was not found";
+                return View("NotFound");
+            }
+            else
+            {
+                course.Name = model.Name;
+                course.TeacherId = model.SelectedTeacherId;
+                var result = _repository.Update(course);
+
+                if (result != null)
+                {
+                    return RedirectToAction("Courses");
+                }
+
+                ModelState.AddModelError("", "Could not save changes for specified course");
+            }
+
+            return View(model);
+        }
         #endregion
     }
 }
