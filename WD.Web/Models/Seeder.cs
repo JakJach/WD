@@ -11,19 +11,19 @@ namespace WD.Web.Models
             modelBuilder.Entity<Course>().HasData(
                 new Course
                 {
-                    CourseId = 1,
+                    Id = 1,
                     Name = "Laboratorium Specjalizacyjne"
                 },
                 new Course
                 {
-                    CourseId = 2,
+                    Id = 2,
                     Name = "Seminarium Dyplomowe"
                 });
 
             modelBuilder.Entity<Project>().HasData(
                 new Project
                 {
-                    ProjectId = 1,
+                    Id = 1,
                     Title = "Wirtualny Dziekanat",
                     CreationDate = DateTime.Now,
                     CourseId = 1,
@@ -49,7 +49,7 @@ namespace WD.Web.Models
                     Goal = "Wykonanie działającej  i gotowej do użycia wtyczki",
                     Scope = "Stowrzenie skryptów uczenia maszynowego, wykonanie biblioteki dll wykorzystującej wyniki działąnia ww. skryptów, wykonanie hosta",
                     StudentQualifications = "C#; Python",
-                    ThesisId = 1
+                    Id = 1
                 });
         }
     }

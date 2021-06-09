@@ -1,15 +1,15 @@
 ﻿@model List<ManageUsersViewModel>
 @{
-    ViewData["Title"] = "AGH VD | ADMIN | Edit Role Users";
+    ViewData["Title"] = "AGH VD | ADMIN | Edit Course Students";
 }
 @{
-    var roleID = ViewBag.roleID;
+    var courseId = ViewBag.courseId;
 }
 
 <form method="post">
     <div class="card">
         <div class="card-header">
-            <h3>Add or remove users from this role:</h3>
+            <h3>Add or remove students from this course:</h3>
         </div>
         <div class="card-body">
             @for (int i = 0; i < Model.Count; i++)
@@ -27,7 +27,7 @@
         </div>
         <div class="card-footer">
             <input type="submit" value="Update" class="btn btn-dark" />
-            <a asp-controller="Administration" asp-action="EditRole" asp-route-id="@roleID" class="btn btn-dark">Cancel</a>
+            <a asp-controller="Administration" asp-action="EditCourse" asp-route-id="@courseId" class="btn btn-dark">Cancel</a>
         </div>
     </div>
 </form>

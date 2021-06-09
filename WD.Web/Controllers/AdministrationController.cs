@@ -175,11 +175,11 @@ namespace WD.Web.Controllers
                 return View("NotFound");
             }
 
-            var model = new List<ManageRoleUsersViewModel>();
+            var model = new List<ManageUsersViewModel>();
 
             foreach (var user in _userManager.Users)
             {
-                var roleUser = new ManageRoleUsersViewModel()
+                var roleUser = new ManageUsersViewModel()
                 {
                     UserID = user.Id,
                     UserName = user.UserName
@@ -197,7 +197,7 @@ namespace WD.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ManageRoleUsers(List<ManageRoleUsersViewModel> model, string roleID)
+        public async Task<IActionResult> ManageRoleUsers(List<ManageUsersViewModel> model, string roleID)
         {
             var role = await _roleManager.FindByIdAsync(roleID);
 
@@ -460,7 +460,7 @@ namespace WD.Web.Controllers
             {
                 courses.Add(new CourseViewModel()
                 {
-                    CourseId = course.CourseId,
+                    CourseId = course.Id,
                     Name = course.Name,
                     Teacher = course.TeacherId != null ? (await _userManager.FindByIdAsync(course.TeacherId)).UserName : "Teacher not assigned"
                 });
@@ -513,7 +513,7 @@ namespace WD.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditCourse(int id)
         {
-            var course = _repository.Courses.Where(c => c.CourseId == id).FirstOrDefault();
+            var course = _repository.Courses.Where(c => c.Id == id).FirstOrDefault();
 
             if (course == null)
             {
@@ -525,7 +525,7 @@ namespace WD.Web.Controllers
 
             var model = new EditCourseViewModel()
             {
-                Id = course.CourseId,
+                Id = course.Id,
                 Name = course.Name,
                 SelectedTeacher = teacher?.UserName,
                 SelectedTeacherId = teacher?.Id
@@ -537,7 +537,7 @@ namespace WD.Web.Controllers
                 model.Teachers.Add(new SelectListItem(t.UserName, t.Id));
             }
 
-            var studentIds = _repository.StudentCourses.Where(sc => sc.CourseId == course.CourseId).Select(sc => sc.StudentId);
+            var studentIds = _repository.StudentCourses.Where(sc => sc.CourseId == course.Id).Select(sc => sc.StudentId);
 
             foreach (var student in studentIds)
             {
@@ -550,7 +550,7 @@ namespace WD.Web.Controllers
         [HttpPost]
         public IActionResult EditCourse(EditCourseViewModel model)
         {
-            var course = _repository.Courses.Where(c => c.CourseId == model.Id).FirstOrDefault();
+            var course = _repository.Courses.Where(c => c.Id == model.Id).FirstOrDefault();
 
             if (course == null)
             {
@@ -572,6 +572,84 @@ namespace WD.Web.Controllers
             }
 
             return View(model);
+        }
+        #endregion
+
+        #region Manage Course Students
+        [HttpGet]
+        public async Task<IActionResult> ManageCourseStudents(int id)
+        {
+            ViewBag.courseId = id;
+
+            var course = _repository.Courses.Where(c => c.Id == id).FirstOrDefault();
+
+            if (course == null)
+            {
+                ViewBag.ErrorMessage = $"Course with ID = {id} was not found";
+                return View("NotFound");
+            }
+
+            var courseStudentIds = _repository.StudentCourses.Where(sc => sc.CourseId == id).Select(sc => sc.StudentId);
+
+            var model = new List<ManageUsersViewModel>();
+
+            foreach (var user in _userManager.Users)
+            {
+                if (await _userManager.IsInRoleAsync(user, "Student"))
+                {
+                    var student = new ManageUsersViewModel()
+                    {
+                        UserID = user.Id,
+                        UserName = user.UserName
+                    };
+
+                    if (courseStudentIds.Contains(user.Id))
+                        student.IsSelected = true;
+                    else
+                        student.IsSelected = false;
+
+                    model.Add(student);
+                }
+
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ManageCourseStudents(List<ManageUsersViewModel> model, int id)
+        {
+            var course = _repository.Courses.Where(c => c.Id == id).FirstOrDefault();
+
+            if (course == null)
+            {
+                ViewBag.ErrorMessage = $"Course with ID = {id} was not found";
+                return View("NotFound");
+            }
+
+            var toRemove = _repository.StudentCourses.Where(sc => sc.CourseId == id);
+            if (toRemove != null)
+                foreach (var item in toRemove)
+                    _repository.Delete(item);
+
+            foreach (var student in model)
+            {
+                StudentCourses result = null;
+
+                if (student.IsSelected)
+                {
+                    result = _repository.Add(new StudentCourses() { CourseId = id, StudentId = student.UserID });
+                    if (result == null)
+                    {
+                        ModelState.AddModelError("", $"Could not add user {student.UserName} to specified course.");
+                        _logger.LogError($"Could not add user {student.UserName} to specified course.");
+                    }
+                }
+                else
+                    continue;
+            }
+
+            return RedirectToAction("EditCourse", "Administration", new { Id = id });
         }
         #endregion
     }

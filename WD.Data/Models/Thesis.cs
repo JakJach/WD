@@ -4,7 +4,7 @@ namespace WD.Data.Models
 {
     public partial class Thesis
     {
-        public int ThesisId { get; set; }
+        public int Id { get; set; }
         public float? PromoterNote { get; set; }
         public float? ReviewerNote { get; set; }
         public string PromoterOpinion { get; set; }

@@ -47,7 +47,7 @@ namespace WD.Web.Controllers
             List<StudentFinalNote> finalNotes = new List<StudentFinalNote>();
             foreach (var sc in studentClasses)
             {
-                Course c = _repository.Courses.Where(c => c.CourseId == sc.CourseId).FirstOrDefault();
+                Course c = _repository.Courses.Where(c => c.Id == sc.CourseId).FirstOrDefault();
                 var teacher = await _userManager.FindByIdAsync(c.TeacherId);
                 finalNotes.Add(new StudentFinalNote() { FinalNote = sc.FinalNote, CourseName = c.Name, Teacher = teacher.UserName });
             }
@@ -55,7 +55,7 @@ namespace WD.Web.Controllers
             var studentProjects = _repository.ProjectStudents.Where(ps => ps.StudentId == student.Id);
             List<Project> projects = new List<Project>();
             foreach (var sp in studentProjects)
-                projects.Add(_repository.Projects.Where(p => p.ProjectId == sp.ProjectId).FirstOrDefault());
+                projects.Add(_repository.Projects.Where(p => p.Id == sp.ProjectId).FirstOrDefault());
 
             var model = new StudentViewModel()
             {

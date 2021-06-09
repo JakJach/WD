@@ -19,15 +19,15 @@ namespace WD.Web.Models
 
             modelBuilder.Entity<Project>().ToTable("Projects");
 
-            modelBuilder.Entity<ProjectFile>().ToTable("ProjectFiles").HasNoKey();
+            modelBuilder.Entity<ProjectFile>().ToTable("ProjectFiles").HasKey("Id");
 
-            modelBuilder.Entity<ProjectStudent>().ToTable("ProjectStudents").HasNoKey();
+            modelBuilder.Entity<ProjectStudent>().ToTable("ProjectStudents").HasKey("Id");
 
-            modelBuilder.Entity<StudentCourses>().ToTable("StudentCourses").HasNoKey();
+            modelBuilder.Entity<StudentCourses>().ToTable("StudentCourses").HasKey("Id");
 
             modelBuilder.Entity<Thesis>().ToTable("Theses");
 
-            modelBuilder.Entity<ThesisFile>().ToTable("ThesisFiles").HasNoKey();
+            modelBuilder.Entity<ThesisFile>().ToTable("ThesisFiles").HasKey("Id");
 
             modelBuilder.Seed();
 

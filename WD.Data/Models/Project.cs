@@ -4,7 +4,7 @@ namespace WD.Data.Models
 {
     public partial class Project
     {
-        public int ProjectId { get; set; }
+        public int Id { get; set; }
         public float? Note { get; set; }
         public string Review { get; set; }
         public string Scope { get; set; }

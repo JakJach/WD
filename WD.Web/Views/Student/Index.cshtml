@@ -47,7 +47,7 @@
                                 }
                                 else
                                 {
-                                    <a asp-controller="Student" asp-action="AddProject" asp-route-id="@project.ProjectId" class="btn btn-dark">Submit</a>
+                                    <a asp-controller="Student" asp-action="AddProject" asp-route-id="@project.Id" class="btn btn-dark">Submit</a>
                                 }
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             }
                             else
                             {
-                                <a asp-controller="Student" asp-action="AddThesis" asp-route-id="@Model.Thesis.ThesisId" class="btn btn-dark">Submit</a>
+                                <a asp-controller="Student" asp-action="AddThesis" asp-route-id="@Model.Thesis.Id" class="btn btn-dark">Submit</a>
                             }
                         </div>
                     </div>
@@ -92,10 +92,10 @@
                     {
                         <div class="card mb-3 text-left">
                             <div class="card-header">
-                                @classes.CourseName
+                                Teacher: @classes.Teacher
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Teacher: @classes.Teacher</h5>
+                                <h5 class="card-title">@classes.CourseName</h5>
                             </div>
                             <div class="card-footer">
                                 @if (classes.FinalNote != null)

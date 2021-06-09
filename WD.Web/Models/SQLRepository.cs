@@ -23,7 +23,7 @@ namespace WD.Web.Models
 
         public StudentCourses Delete(StudentCourses finalNote)
         {
-            var fn = _context.StudentCourses.Find(finalNote);
+            var fn = _context.StudentCourses.Find(finalNote.Id);
             if (fn != null)
             {
                 _context.StudentCourses.Remove(fn);
