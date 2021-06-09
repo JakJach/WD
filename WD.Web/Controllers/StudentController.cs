@@ -49,7 +49,13 @@ namespace WD.Web.Controllers
             {
                 Course c = _repository.Courses.Where(c => c.Id == sc.CourseId).FirstOrDefault();
                 var teacher = await _userManager.FindByIdAsync(c.TeacherId);
-                finalNotes.Add(new StudentFinalNote() { FinalNote = sc.FinalNote, CourseName = c.Name, Teacher = teacher.UserName });
+                finalNotes.Add(
+                    new StudentFinalNote()
+                    {
+                        FinalNote = sc.FinalNote,
+                        CourseName = c.Name,
+                        Teacher = teacher?.UserName
+                    });
             }
 
             var studentProjects = _repository.ProjectStudents.Where(ps => ps.StudentId == student.Id);
