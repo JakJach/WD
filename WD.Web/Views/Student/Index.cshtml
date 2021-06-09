@@ -1,97 +1,116 @@
-﻿@{
+﻿@model StudentViewModel
+@{
     ViewData["Title"] = "AGH VD | Student | Home";
 }
 
-@*<div class="row">
+<div class="row">
     <div class="col-md-12">
         <nav>
             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link text-white active" id="nav-projects-tab" href="#projects" style="background-color: #5cb85c" data-toggle="tab" role="tab" aria-controls="projects" aria-selected="true">Projects</a>
-                <a class="nav-item nav-link text-white" id="nav-thesis-tab" href="#theses" style="background-color: #292b2c" data-toggle="tab" role="tab" aria-controls="thesis" aria-selected="false">Theses</a>
-                <a class="nav-item nav-link text-white" id="nav-notes-tab" href="#classes" style="background-color: #d9534f" data-toggle="tab" role="tab" aria-controls="classes" aria-selected="false">Classes</a>
+                <a class="nav-item nav-link text-white active" id="nav-projects-tab" href="#projects" style="background-color: #5cb85c"
+                   data-toggle="tab" role="tab" aria-controls="projects" aria-selected="true">Projects</a>
+                <a class="nav-item nav-link text-white" id="nav-note-tab" href="#classes" style="background-color: #292b2c"
+                   data-toggle="tab" role="tab" aria-controls="classes" aria-selected="false">Final Notes</a>
+                @if (Model.Thesis != null)
+                {
+                    <a class="nav-item nav-link text-white" id="nav-thesis-tab" href="#theses" style="background-color: #d9534f"
+                       data-toggle="tab" role="tab" aria-controls="thesis" aria-selected="false">Thesis</a>
+                }
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="projects" role="tabpanel" aria-labelledby="nav-projects-tab">
-                <table class="table" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Classes</th>
-                            <th>Title</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var project in Model.Projects)
-                        {
-                            <tr>
-                                <td>@project.ClassId ?? "---"</td>
-                                <td>@project.Title</td>
+            @if (Model.Projects.Any())
+            {
+                <div class="tab-pane fade show active" id="projects" role="tabpanel" aria-labelledby="nav-projects-tab">
+                    @foreach (var project in Model.Projects)
+                    {
+                        <div class="card mb-3 text-left">
+                            <div class="card-header">
+                                @project.Title
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Scope: @project.Scope</h5>
+                            </div>
+                            <div class="card-footer">
                                 @if (project.IsSubmitted)
                                 {
-                                    @if (project.IsReviewed)
+                                    if (project.IsReviewed && project.Note != null)
                                     {
-                                        @if (project.Note < 3)
-                                        {
-                                            <td class="text-danger">Project was not passed.</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="text-success">Project passed.<br />Note: @project.Note</td>
-                                        }
+                                        <h5>Project reviewed:</h5>
+                                        <h4>Note: @project.Note</h4>
                                     }
                                     else
                                     {
-                                        <td class="text-dark">Project has not been reviewed yet.</td>
+                                        <h5>Project was not reviewed yet.</h5>
+                                        <h6>Please, contact teacher for further information.</h6>
                                     }
                                 }
                                 else
                                 {
-                                    <td><a class="btn btn-dark" asp-controller="Student" asp-action="AddProject" asp-route-id="@project.ProjectId">Submit project</a></td>
+                                    <a asp-controller="Student" asp-action="AddProject" asp-route-id="@project.ProjectId" class="btn btn-dark">Submit</a>
                                 }
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div id="theses" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-thesis-tab">
-                <table class="table" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Thesis Title</th>
-                            <th>Thesis Goal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var thesis in Model.Theses)
-                        {
-                            <tr>
-                                <td>@thesis.Title</td>
-                                <td>@thesis.Goal</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div id="classes" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-notes-tab">
-                <table class="table" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Class Name</th>
-                            <th>Teacher ID</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (Class classes in Model.Classes)
-                        {
-                            <tr>
-                                <td>@classes.Name</td>
-                                <td>@classes.TeacherId</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            @if (Model.Thesis != null)
+            {
+                <div id="theses" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-thesis-tab">
+                    <div class="card mb-3 text-left">
+                        <div class="card-header">
+                            @Model.Thesis.Title
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Scope: @Model.Thesis.Scope</h5>
+                        </div>
+                        <div class="card-footer">
+                            @if (Model.Thesis.IsSubmitted)
+                            {
+                                if (Model.Thesis.IsReviewed)
+                                {
+                                    <h5>Thesis reviewed:</h5>
+                                }
+                                else
+                                {
+                                    <h5>Thesis was not reviewed yet.</h5>
+                                    <h6>Please, contact promoter for further information.</h6>
+                                }
+                            }
+                            else
+                            {
+                                <a asp-controller="Student" asp-action="AddThesis" asp-route-id="@Model.Thesis.ThesisId" class="btn btn-dark">Submit</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.FinalNotes.Any())
+            {
+                <div id="classes" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-notes-tab">
+                    @foreach (var classes in Model.FinalNotes)
+                    {
+                        <div class="card mb-3 text-left">
+                            <div class="card-header">
+                                @classes.ClassName
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Teacher: @classes.Teacher</h5>
+                            </div>
+                            <div class="card-footer">
+                                @if (classes.FinalNote != null)
+                                {
+                                    <h5 class="card-title">@classes.FinalNote</h5>
+                                }
+                                else
+                                {
+                                    <h5 class="card-title">No final note yet.</h5>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     </div>
-</div>*@
+</div>

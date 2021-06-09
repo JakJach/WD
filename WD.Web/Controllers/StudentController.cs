@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using WD.Data.Models;
+using WD.Data.Presentation;
 using WD.Web.Models;
 using WD.Web.ViewModels;
 
@@ -14,19 +20,51 @@ namespace WD.Web.Controllers
         private readonly ILogger<StudentController> _logger;
         private readonly IWDWebRepository _repository;
         private readonly IHostEnvironment _hostingEnvironment;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public StudentController(ILogger<StudentController> logger, IWDWebRepository repository, IHostEnvironment hostingEnvironment)
+        public StudentController(ILogger<StudentController> logger, IWDWebRepository repository, IHostEnvironment hostingEnvironment, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _repository = repository;
             _hostingEnvironment = hostingEnvironment;
+            _userManager = userManager;
         }
 
         #region Index
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var student = await _userManager.GetUserAsync(User);
+
+            if (student == null)
+            {
+                _logger.LogError($"Student {User.Identity.Name} was not found in database");
+                ViewBag.ErrorMessage = $"Student {User.Identity.Name} was not found in database";
+                return View("NotFound");
+            }
+
+            var studentClasses = _repository.StudentClasses.Where(sc => sc.StudentId == student.Id);
+            List<StudentFinalNote> finalNotes = new List<StudentFinalNote>();
+            foreach (var sc in studentClasses)
+            {
+                Class c = _repository.Classes.Where(c => c.ClassId == sc.ClassId).FirstOrDefault();
+                var teacher = await _userManager.FindByIdAsync(c.TeacherId);
+                finalNotes.Add(new StudentFinalNote() { FinalNote = sc.FinalNote, ClassName = c.Name, Teacher = teacher.UserName });
+            }
+
+            var studentProjects = _repository.ProjectStudents.Where(ps => ps.StudentId == student.Id);
+            List<Project> projects = new List<Project>();
+            foreach (var sp in studentProjects)
+                projects.Add(_repository.Projects.Where(p => p.ProjectId == sp.ProjectId).FirstOrDefault());
+
+            var model = new StudentViewModel()
+            {
+                Thesis = _repository.Theses.Where(t => t.StudentId == student.Id).FirstOrDefault(),
+                FinalNotes = finalNotes,
+                Projects = projects
+            };
+
+            return View(model);
         }
         #endregion
         //#region Index

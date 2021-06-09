@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WD.Web.ViewModels
 {
-    public class StudentAddProjectViewModel
+    public class AddProjectViewModel
     {
         public string ClassesName { get; set; }
         public string Title { get; set; }

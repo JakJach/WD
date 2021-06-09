@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WD.Web.ViewModels
 {
-    public class TeacherReviewThesisViewModel
+    public class ReviewThesisViewModel
     {
         public string Title { get; set; }
         public string Review { get; set; }
