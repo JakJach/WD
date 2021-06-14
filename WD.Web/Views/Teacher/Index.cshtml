@@ -3,268 +3,201 @@
     ViewData["Title"] = "AGH VD | Teacher Panel | Home";
 }
 
-<div class="col-12">
-    <nav>
-        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link bg-success text-white active" id="nav-courses-tab" href="#courses"
-               data-toggle="tab" role="tab" aria-controls="nav-courses" aria-selected="true">Courses</a>
-            <a class="nav-item nav-link bg-dark text-white" id="nav-thesis-tab" href="#theses"
-               data-toggle="tab" role="tab" aria-controls="nav-thesis" aria-selected="false">Theses</a>
-            <a class="nav-item nav-link bg-danger text-white" id="nav-notes-tab" href="#notes"
-               data-toggle="tab" role="tab" aria-controls="nav-notes" aria-selected="false">Final Notes</a>
-        </div>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-courses" role="tabpanel" aria-labelledby="nav-courses-tab">
-            @if (Model.Courses.Any())
+<nav>
+    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link bg-success text-white active" id="nav-courses-tab" href="#nav-courses"
+           data-toggle="tab" role="tab" aria-controls="nav-courses" aria-selected="true">Courses</a>
+        <a class="nav-item nav-link bg-dark text-white" id="nav-theses-tab" href="#nav-theses"
+           data-toggle="tab" role="tab" aria-controls="nav-theses" aria-selected="false">Theses</a>
+        <a class="nav-item nav-link bg-danger text-white" id="nav-notes-tab" href="#nav-notes"
+           data-toggle="tab" role="tab" aria-controls="nav-notes" aria-selected="false">Final Notes</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-courses" role="tabpanel" aria-labelledby="nav-courses-tab">
+        @if (Model.Courses.Any())
+        {
+            @foreach (var course in Model.Courses)
             {
-                <div class="tab-pane fade show active" id="projects" role="tabpanel" aria-labelledby="nav-projects-tab">
-                    @foreach (var course in Model.Courses)
-                    {
-                        var courseCardId = course.CourseName;
-                        <div class="card m-3 text-left">
-                            <div class="card-header">
-                                <a data-toggle="collapse" href="#course" aria-expanded="true" aria-controls="@courseCardId" class="text-dark">
-                                    @course.CourseName
-                                </a>
-                            </div>
-                            <div class="card-body collapse" id="@courseCardId">
-                                @if (course.Projects.Any())
-                                {
-                                    @foreach (var project in course.Projects)
-                                    {
-                                        <div class="card mb-3 text-left">
-                                            <div class="card-header">
-                                                <h4 class="card-title">@project.ProjectName</h4>
+                var courseCardId = "course" + course.CourseId;
+                <div class="card m-3 text-left">
+                    <div class="card-header">
+                        <a data-toggle="collapse" href="#@courseCardId" class="text-dark">
+                            @course.CourseName
+                        </a>
+                    </div>
+                    <div class="card-body collapse" id="@courseCardId">
+                        @if (course.Projects.Any())
+                        {
+                            @foreach (var project in course.Projects)
+                            {
+                                <div class="card mb-3 text-left">
+                                    <div class="card-header">
+                                        <h4 class="card-title">@project.ProjectName</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="get" class="mt-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label">Goal:</label>
+                                                <label class="col-sm-10 form-control flex-wrap">@project.Goal</label>
                                             </div>
-                                            <div class="card-body">
-                                                <form method="get" class="mt-3">
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-2 col-form-label">Goal</label>
-                                                        <label class="col-sm-10 form-control">@project.Goal</label>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-2 col-form-label">Scope</label>
-                                                        <label class="col-sm-10 form-control">@project.Scope</label>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-2 col-form-label">Review</label>
-                                                        <label class="col-sm-10 form-control">@(string.IsNullOrEmpty(project.Review) ? "Not reviewed yet" : project.Review)</label>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-2 col-form-label">Submission Date</label>
-                                                        <label class="col-sm-10 form-control">@(project.SubmissionDate.ToString() ?? "Not submitted yet")</label>
-                                                    </div>
-                                                    <div class="form-group card m-1">
-                                                        <div class="card-header">
-                                                            <h4>Students:</h4>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            @if (project.Students.Any())
-                                                            {
-                                                                foreach (var student in project.Students)
-                                                                {
-                                                                    <h5 class="card-title">@student</h5>
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                <h5 class="card-title">None at the moment.</h5>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label">Scope:</label>
+                                                <label class="col-sm-10 form-control flex-wrap">@project.Scope</label>
                                             </div>
-                                            <div class="card-footer">
-                                                <a asp-controller="Teacher" asp-action="EditProject" asp-route-id="@project.ProjectId" class="btn btn-dark">Review Project</a>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label">Review:</label>
+                                                <label class="col-sm-10 form-control">@(string.IsNullOrEmpty(project.Review) ? "Not reviewed yet" : project.Review)</label>
                                             </div>
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
-                                    <h5 class="card-title">There are no projects defined for this course</h5>
-                                    <h6 class="card-title">Use the button below to add new project</h6>
-                                }
-                            </div>
-                        </div>
-                    }
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label">Submission Date:</label>
+                                                <label class="col-sm-10 form-control">@(project.SubmissionDate.ToString() ?? "Not submitted yet")</label>
+                                            </div>
+                                            <div class="form-group card m-1">
+                                                <div class="card-header">
+                                                    <h4>Students:</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    @if (project.Students.Any())
+                                                    {
+                                                        foreach (var student in project.Students)
+                                                        {
+                                                            <h5 class="card-title">@student</h5>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <h5 class="card-title">None at the moment.</h5>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a asp-controller="Teacher" asp-action="ReviewProject" asp-route-id="@project.ProjectId" class="btn btn-success">Review Project</a>
+                                        <a asp-controller="Teacher" asp-action="EditProject" asp-route-id="@project.ProjectId" class="btn btn-dark">Edit Project</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h5 class="card-title">There are no projects defined for this course</h5>
+                            <h6 class="card-title">Use the button below to add new project</h6>
+                        }
+                    </div>
+                    <div class="card-footer collapse">
+                        <a class="btn btn-dark mb-3" asp-controller="Teacher" asp-action="CreateProject">Create New Project</a>
+                    </div>
                 </div>
             }
+        }
+    </div>
+    <div id="nav-theses" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-theses-tab">
+        <div class="text-center m-3">
+            <a class="btn btn-dark mb-3" asp-controller="Teacher" asp-action="CreateThesis">Create New Thesis</a>
         </div>
-        <div id="nav-thesis" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-thesis-tab">
-            @*<div class="container-fluid">
-                <table class="table" cellspacing="0">
-                    @if (Model.TeacherPromotingTheses.ToArray().Length == 0)
-                    {
-                        <thead class="text-white bg-dark">
-                            <tr class="text-center">Brak promowanych prac</tr>
-                        </thead>
-                    }
-                    else
-                    {
-                        <thead>
-                            <tr class="text-white bg-dark">
-                                <th colspan="6" class="text-center">Promowane prace:</th>
-                            </tr>
-                            <tr>
-                                <th style="width: 16.66%">Imię i nazwisko studenta</th>
-                                <th style="width: 16.66%">Tytuł pracy</th>
-                                <th style="width: 16.66%">Ocena promotora</th>
-                                <th style="width: 16.66%">Opinia promotora</th>
-                                <th style="width: 16.66%">Ocena recenzenta</th>
-                                <th style="width: 16.66%">Recenzja</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (Thesis thesis in Model.TeacherPromotingTheses)
-                            {
-                                <tr>
-                                    <td>
-                                        @(Model.TeacherStudents.FirstOrDefault(s => s.ID == thesis.StudentID).Name
-                                                + " " + Model.TeacherStudents.FirstOrDefault(s => s.ID == thesis.StudentID).Surname)
-                                    </td>
-                                    <td>@thesis.Title</td>
-                                    @if (thesis.IsUploaded)
-                                    {
-                                        @if (thesis.IsCheckedByPromoter)
-                                        {
-                                            <td>@thesis.PromoterNote</td>
-                                            <td>@thesis.PromoterOpinion</td>
-                                            @if (thesis.IsCheckedByReviewer)
-                                            {
-                                                <td class="text-success">@thesis.ReviewerNote</td>
-                                                <td>@thesis.Review</td>
-                                            }
-                                            else
-                                            {
-                                                <td class="text-dark">BRAK</td>
-                                                <td class="text-dark">Recenzent nie dodał jeszcze swojej recenzji</td>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <td><a asp-controller="Teacher" asp-action="ReviewThesis" asp-route-id="@thesis.ID" asp-route-type="1" class="btn btn-dark text-white">Oceń pracę</a></td>
-                                            <td>Praca czeka na twoją ocenę</td>
-                                            <td></td>
-                                            <td></td>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <td class="text-danger">BRAK</td>
-                                        <td>Student nie dodał jeszcze pracy</td>
-                                        <td></td>
-                                        <td></td>
-                                    }
-                                </tr>
-                            }
-                        </tbody>
-                    }
-                </table>
-                <table class="table" cellspacing="0">
+        @if (Model.Theses.Any())
+        {
+            @foreach (var thesis in Model.Theses)
+            {
+                var thesisCardId = "thesis" + thesis.Id;
+                <div class="card m-3 text-left">
+                    <div class="card-header">
+                        <a data-toggle="collapse" href="#@thesisCardId" class="text-dark">
+                            @thesis.Title
+                        </a>
+                    </div>
+                    <div class="card-body collapse" id="@thesisCardId">
+                        <form method="get" class="mt-3">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label d-flex">Goal:</label>
+                                <label class="col-sm-10 form-control">@thesis.Goal</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label d-flex">Scope:</label>
+                                <label class="col-sm-10 form-control">@thesis.Scope</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label d-flex">Student Qualifications:</label>
+                                <label class="col-sm-10 form-control">@thesis.StudentQualifications</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Submission Date:</label>
+                                <label class="col-sm-10 form-control">@(thesis.SubmissionDate.ToString() ?? "Not submitted yet")</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Promoter Note:</label>
+                                <label class="col-sm-10 form-control">@thesis.PromoterNote</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Promoter Opinion:</label>
+                                <label class="col-sm-10 form-control">@(string.IsNullOrEmpty(thesis.PromoterOpinion) ? "Not reviewed yet" : thesis.PromoterOpinion)</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Promoter Opinion Date:</label>
+                                <label class="col-sm-10 form-control">@(thesis.AcceptationDate.ToString() ?? "Not reviewed yet")</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Reviewer Note:</label>
+                                <label class="col-sm-10 form-control">@thesis.ReviewerNote</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Review:</label>
+                                <label class="col-sm-10 form-control">@(string.IsNullOrEmpty(thesis.Review) ? "Not reviewed yet" : thesis.Review)</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Review Date:</label>
+                                <label class="col-sm-10 form-control">@(thesis.ReviewDate.ToString() ?? "Not reviewed yet")</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Teacher" asp-action="ReviewThesis" asp-route-id="@thesis.Id" class="btn btn-success">Review Thesis</a>
+                        <a asp-controller="Teacher" asp-action="EditThesis" asp-route-id="@thesis.Id" class="btn btn-dark">Edit Thesis</a>
+                    </div>
+                </div>
 
-                    @if (Model.TeacherReviewingTheses.ToArray().Length == 0)
-                    {
-                        <thead class="text-dark text-center">
-                            <tr>
-                                <th colspan="6" class="text-center">Brak recenzowanych prac</th>
-                            </tr>
-                        </thead>
-                    }
-                    else
-                    {
-                        <thead>
-                            <tr class="text-white bg-dark">
-                                <th colspan="6" class="text-center">Recenzowane prace:</th>
-                            </tr>
-                            <tr>
-                                <th style="width: 16.66%">Imię i nazwisko studenta</th>
-                                <th style="width: 16.66%">Tytuł pracy</th>
-                                <th style="width: 16.66%">Ocena promotora</th>
-                                <th style="width: 16.66%">Opinia promotora</th>
-                                <th style="width: 16.66%">Ocena recenzenta</th>
-                                <th style="width: 16.66%">Recenzja</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (Thesis thesis in Model.TeacherReviewingTheses)
-                            {
-                                <tr>
-                                    <td>
-                                        @(Model.TeacherStudents.FirstOrDefault(s => s.ID == thesis.StudentID).Name
-                                                + " " + Model.TeacherStudents.FirstOrDefault(s => s.ID == thesis.StudentID).Surname)
-                                    </td>
-                                    <td>@thesis.Title</td>
-                                    @if (thesis.IsUploaded)
-                                    {
-                                        @if (thesis.IsCheckedByPromoter)
-                                        {
-                                            <td>@thesis.PromoterNote</td>
-                                            <td>@thesis.PromoterOpinion</td>
-                                            @if (thesis.IsCheckedByReviewer)
-                                            {
-                                                <td class="text-success">@thesis.ReviewerNote</td>
-                                                <td>@thesis.Review</td>
-                                            }
-                                            else
-                                            {
-                                                <td><a asp-controller="Teacher" asp-action="ReviewThesis" asp-route-id="@thesis.ID" asp-route-type="2" class="btn btn-dark text-white">Zrecenzuj pracę</a></td>
-                                                <td class="text-dark">Praca czeka na twoją recenzję</td>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <td class="text-danger">BRAK</td>
-                                            <td>Promotor nie ocenił jeszcze pracy</td>
-                                            <td></td>
-                                            <td></td>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <td class="text-danger">BRAK</td>
-                                        <td>Student nie dodał jeszcze pracy</td>
-                                        <td></td>
-                                        <td></td>
-                                    }
-                                </tr>
-                            }
-                        </tbody>
-                    }
-                </table>
-            </div>*@
-        </div>
-        <div id="nav-notes" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-notes-tab">
-            @*<table class="table" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Przedmiot</th>
-                        <th>Student</th>
-                        <th>Ocena końcowa</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (VD.Data.Models.Representation.StudentFinalNote finalNote in Model.StudentFinalNotes)
-                    {
-                        <tr>
-                            <td>@finalNote.Classes.Name</td>
-                            <td>@(finalNote.Student.Name + " " + finalNote.Student.Surname)</td>
-                            <td>
-                                @if (finalNote.Student.FinalNotes.ElementAt(finalNote.Classes.ID) == 0)
+            }
+        }
+        else
+        {
+            <div class="card m-3 text-center">
+                <div class="card-body">
+                    <h3 class="card-title text-dark">You do not have any assigned theses.</h3>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="nav-notes" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-notes-tab">
+        @if (Model.Finals.Any())
+        {
+            @foreach (var course in Model.Finals)
+            {
+                var courseCardId = "coursefinal" + course.CourseId;
+                <div class="card m-3 text-left">
+                    <div class="card-header">
+                        <a data-toggle="collapse" href="#@courseCardId" class="text-dark">
+                            @course.CourseName
+                        </a>
+                    </div>
+                    <div class="card-body collapse" id="@courseCardId">
+                        @if (course.FinalNotes.Any())
+                        {
+                            <form method="post">
+                                @foreach (var note in course.FinalNotes)
                                 {
-                                    <a asp-controller="Teacher" asp-action="AddFinalNote" asp-route-classesID="@finalNote.Classes.ID"
-                                       asp-route-studentID="@finalNote.Student.ID" class="btn btn-dark text-white">Dodaj ocenę końcową</a>
                                 }
-                                else
-                                {
-                                    @finalNote.Student.FinalNotes.ElementAt(finalNote.Classes.ID)
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>*@
-        </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <h5 class="card-title">There are no projects defined for this course</h5>
+                            <h6 class="card-title">Use the button below to add new project</h6>
+                        }
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>
