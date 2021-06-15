@@ -184,5 +184,159 @@ namespace WD.Web.Controllers
             return View(model);
         }
         #endregion
+
+        #region Edit Thesis
+        [HttpGet]
+        public async Task<IActionResult> EditThesis(int id)
+        {
+            var thesis = _repository.Theses.Where(t => t.Id == id).FirstOrDefault();
+
+            if (thesis == null)
+            {
+                ViewBag.ErrorMessage = $"Thesis with ID = {id} was not found";
+                return View("NotFound");
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var teachers = await _userManager.GetUsersInRoleAsync("Teacher");
+            List<SelectListItem> reviewerOptions = new List<SelectListItem>();
+            foreach (var t in teachers)
+            {
+                reviewerOptions.Add(new SelectListItem(t.UserName, t.Id));
+            }
+
+            reviewerOptions.RemoveAll(ro => ro.Text == user.UserName || ro.Value == user.Id);
+
+            var students = await _userManager.GetUsersInRoleAsync("Student");
+            List<SelectListItem> studentOptions = new List<SelectListItem>();
+            foreach (var s in students)
+            {
+                studentOptions.Add(new SelectListItem(s.UserName, s.Id));
+            }
+
+            var model = new EditThesisViewModel()
+            {
+                Id = id,
+                Goal = thesis.Goal,
+                Scope = thesis.Scope,
+                Title = thesis.Title,
+                StudentQualifications = thesis.StudentQualifications,
+                SelectedStudent = (await _userManager.FindByIdAsync(thesis.StudentId)).UserName,
+                SelectedReviewer = (await _userManager.FindByIdAsync(thesis.ReviewerId)).UserName,
+                Reviewers = reviewerOptions,
+                Students = studentOptions
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditThesis(EditThesisViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            var thesis = _repository.Theses.Where(t => t.Id == model.Id).FirstOrDefault();
+
+            if (thesis == null)
+            {
+                ViewBag.ErrorMessage = $"Thesis with ID = {model.Id} was not found";
+                return View("NotFound");
+            }
+            else
+            {
+                thesis.Title = model.Title;
+                thesis.Goal = model.Goal;
+                thesis.IsTaken = model.SelectedStudent != null;
+                thesis.ReviewerId = model.SelectedReviewer;
+                thesis.Scope = model.Scope;
+                thesis.StudentQualifications = model.StudentQualifications;
+                thesis.StudentId = model.SelectedStudent;
+                thesis.PromoterId = user.Id;
+
+                var result = _repository.Update(thesis);
+
+                if (result != null)
+                    return RedirectToAction("Index", "Teacher");
+
+                ModelState.AddModelError("", "Could not save changes for the specified thesis");
+            }
+
+            return View(model);
+        }
+        #endregion
+
+        #region Add Final Note
+        [HttpGet]
+        public async Task<IActionResult> AddFinalNote(string studentid, int courseid)
+        {
+            var course = _repository.Courses.Where(c => c.Id == courseid).FirstOrDefault();
+
+            if (course == null)
+            {
+                ViewBag.ErrorMessage = $"Course with ID = {courseid} was not found";
+                return View("NotFound");
+            }
+
+            var student = await _userManager.FindByIdAsync(studentid);
+
+            if (student == null)
+            {
+                ViewBag.ErrorMessage = $"Student with ID = {studentid} was not found";
+                return View("NotFound");
+            }
+
+            var model = new AddFinalNoteViewModel()
+            {
+                CourseId = course.Id,
+                Course = course.Name,
+                Student = student.UserName,
+                StudentId = student.Id
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddFinalNote(AddFinalNoteViewModel model)
+        {
+            var course = _repository.Courses.Where(c => c.Id == model.CourseId).FirstOrDefault();
+
+            if (course == null)
+            {
+                ViewBag.ErrorMessage = $"Course with ID = {model.CourseId} was not found";
+                return View("NotFound");
+            }
+
+            var student = await _userManager.FindByIdAsync(model.StudentId);
+
+            if (student == null)
+            {
+                ViewBag.ErrorMessage = $"Student with ID = {model.StudentId} was not found";
+                return View("NotFound");
+            }
+
+            var finalNote = new StudentCourses()
+            {
+                StudentId = student.Id,
+                CourseId = course.Id,
+                FinalNote = model.Note
+            };
+
+            var copies = _repository.StudentCourses.Where(sc => sc.CourseId == course.Id && sc.StudentId == student.Id);
+            if (copies != null)
+                foreach (var copy in copies)
+                    _repository.Delete(copy);
+
+            var result = _repository.Add(finalNote);
+
+            if (result != null)
+                return RedirectToAction("Index", "Teacher");
+
+            ModelState.AddModelError("", "Could not add final note for specified course/student");
+
+            return View(model);
+        }
+        #endregion
     }
 }

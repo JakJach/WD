@@ -1,0 +1,49 @@
+﻿@model EditThesisViewModel;
+@{
+    ViewData["Title"] = "AGH VD | Edit Thesis";
+}
+
+<h3>Edit Thesis:</h3>
+
+<form method="post" class="mt-3">
+    <div class="form-group row">
+        <label asp-for="Id" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Id" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Title" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger" />
+        </div>
+    </div>
+    <div class="form-group form-row">
+        <label asp-for="Goal" class="text-dark">Goal:</label>
+        <textarea type="text" asp-for="Goal" class="form-control"></textarea>
+        <span asp-validation-for="Goal" class="text-danger"></span>
+    </div>
+    <div class="form-group form-row">
+        <label asp-for="Scope" class="text-dark">Scope:</label>
+        <textarea type="text" asp-for="Scope" class="form-control"></textarea>
+        <span asp-validation-for="Scope" class="text-danger"></span>
+    </div>
+    <div class="form-group form-row">
+        <label asp-for="SelectedStudent" class="text-dark">Student:</label><br />
+        @Html.DropDownListFor(t => t.SelectedStudent, Model.Students, Model.SelectedStudent, new { @class = "form-control" })
+    </div>
+    <div class="form-group form-row">
+        <label asp-for="StudentQualifications" class="text-dark">Student Qualifications:</label>
+        <textarea type="text" asp-for="StudentQualifications" class="form-control"></textarea>
+        <span asp-validation-for="StudentQualifications" class="text-danger"></span>
+    </div>
+    <div class="form-group form-row">
+        <label asp-for="SelectedReviewer" class="text-dark">Reviewer:</label><br />
+        @Html.DropDownListFor(t => t.SelectedReviewer, Model.Reviewers, Model.SelectedReviewer, new { @class = "form-control" })
+    </div>
+    <div class="form-group align-items-center">
+        <input type="submit" name="submit" class="btn btn-dark" value="Update" />
+        <a asp-controller="Teacher" asp-action="Index" class="btn btn-dark">Cancel</a>
+    </div>
+</form>

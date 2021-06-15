@@ -1,11 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using WD.Data;
 
 namespace WD.Web.ViewModels
 {
     public class AddFinalNoteViewModel
     {
-        public string ClassesName { get; set; }
-        [RegularExpression(@"[2.0,3.0,3.5,4.0,4.5,5.0]")]
+        public int Id { get; set; }
+        public int CourseId { get; set; }
+        public string Course { get; set; }
+        public string StudentId { get; set; }
+        public string Student { get; set; }
         public float Note { get; set; }
+        public List<float> Options { get { return FinalNotes.Notes; } }
     }
 }

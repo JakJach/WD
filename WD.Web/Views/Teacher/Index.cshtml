@@ -184,11 +184,20 @@
                     <div class="card-body collapse" id="@courseCardId">
                         @if (course.FinalNotes.Any())
                         {
-                            <form method="post">
-                                @foreach (var note in course.FinalNotes)
-                                {
-                                }
-                            </form>
+                            @foreach (var note in course.FinalNotes)
+                            {
+                                <div class="form-group row">
+                                    <label class="col-sm-10 col-form-label d-flex">@(note.Student + ":")</label>
+                                    @if (note.FinalNote != null && note.FinalNote != 0)
+                                    {
+                                        <label class="col-sm-2 form-control">@note.FinalNote</label>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Teacher" asp-action="AddFinalNote" asp-route-studentid="@note.StudentId" asp-route-courseid="@course.CourseId" class="col-sm-2 btn btn-dark">Add Final Note</a>
+                                    }
+                                </div>
+                            }
                         }
                         else
                         {
