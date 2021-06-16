@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WD.Data.Models;
@@ -21,6 +23,7 @@ namespace WD.Web.Controllers
         private readonly IWDWebRepository _repository;
         private readonly IHostEnvironment _hostingEnvironment;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly string _uploadFolder;
 
         public StudentController(ILogger<StudentController> logger, IWDWebRepository repository, IHostEnvironment hostingEnvironment, UserManager<IdentityUser> userManager)
         {
@@ -28,6 +31,8 @@ namespace WD.Web.Controllers
             _repository = repository;
             _hostingEnvironment = hostingEnvironment;
             _userManager = userManager;
+
+            _uploadFolder = Path.Combine(_hostingEnvironment.ContentRootPath, "wwwroot", "files");
         }
 
         #region Index
@@ -73,155 +78,73 @@ namespace WD.Web.Controllers
             return View(model);
         }
         #endregion
-        //#region Index
-        //public IActionResult Index(int id = 1)
-        //{
-        //    _student = _repository.GetStudent(id);
-        //    TempData["studentID"] = id;
-        //    StudentViewModel model = new StudentViewModel
-        //    {
-        //        LoggedInStudent = _student,
-        //        StudentClasses = _repository.GetStudentClasses(_student),
-        //        StudentProjects = _repository.GetStudentProjects(_student),
-        //        StudentThesis = _repository.GetStudentThesis(_student)
-        //    };
-        //    return View(model);
-        //}
-        //#endregion
 
-        //#region AddProject
-        //[HttpGet]
-        //public IActionResult AddProject(int id)
-        //{
-        //    _student = _repository.GetStudent((int)TempData["studentID"]);
-        //    TempData["studentID"] = _student.ID;
-        //    if (ModelState.IsValid)
-        //    {
-        //        StudentAddProjectViewModel model = new StudentAddProjectViewModel();
-        //        Project project = _repository.GetProject(id);
-        //        Classes classes = _repository.GetClasses(project.ClassesID);
-        //        model.ClassesName = classes.Name;
-        //        model.Title = project.Name;
-        //        TempData["classesName"] = classes.Name;
-        //        TempData["title"] = project.Name;
-        //        return View(model);
-        //    }
-        //    return RedirectToAction("index", "student", new { id = _student.ID });
-        //}
+        #region Submit Thesis
+        [HttpGet]
+        public async Task<IActionResult> SubmitThesis(int id)
+        {
+            var thesis = _repository.Theses.Where(t => t.Id == id).FirstOrDefault();
 
-        //[HttpPost]
-        //public IActionResult AddProject(StudentAddProjectViewModel model)
-        //{
-        //    _student = _repository.GetStudent((int)TempData["studentID"]);
-        //    TempData["studentID"] = _student.ID;
-        //    string classesName = (string)TempData["classesName"];
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (model.File != null)
-        //        {
-        //            string uploadFolder = Path.Combine(_hostingEnvironment1.ContentRootPath, "wwwroot", "files");
-        //            string fileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
-        //            string filePath = Path.Combine(uploadFolder, fileName);
-        //            model.File.CopyTo(new FileStream(filePath, FileMode.Create));
+            if (thesis == null)
+            {
+                ViewBag.ErrorMessage = $"Thesis with ID = {id} was not found";
+                return View("NotFound");
+            }
 
-        //            Classes classes = _repository.GetClasses(classesName);
-        //            Project project = _repository.GetProject(classes, _student);
-        //            project.FileName = fileName;
+            var student = await _userManager.FindByIdAsync(thesis.StudentId);
+            var promoter = await _userManager.FindByIdAsync(thesis.PromoterId);
+            var reviewer = await _userManager.FindByIdAsync(thesis.ReviewerId);
 
-        //            if (model.Attachments != null)
-        //            {
-        //                List<string> names = project.AttachmentsName ?? new List<string>();
-        //                uploadFolder = Path.Combine(_hostingEnvironment1.ContentRootPath, "wwwroot", "files");
-        //                foreach (IFormFile attachment in model.Attachments)
-        //                {
-        //                    if (!names.Any(n => n.Contains(attachment.FileName)))
-        //                    {
-        //                        fileName = Guid.NewGuid().ToString() + "_" + attachment.FileName;
-        //                        filePath = Path.Combine(uploadFolder, fileName);
-        //                        attachment.CopyTo(new FileStream(filePath, FileMode.Create));
-        //                        names.Add(fileName);
-        //                    }
-        //                }
-        //                project.AttachmentsName = names;
-        //            }
-        //            project.IsUploaded = true;
-        //            _repository.UpdateProject(project);
+            var model = new SubmitThesisViewModel()
+            {
+                Id = thesis.Id,
+                Student = student.UserName,
+                Promoter = promoter.UserName,
+                Reviever = reviewer.UserName,
+                Title = thesis.Title
+            };
 
-        //        }
-        //        return RedirectToAction("index", "student", new { id = _student.ID });
-        //    }
-        //    return View();
-        //}
-        //#endregion
+            return View(model);
+        }
 
-        //#region AddThesis
-        //[HttpGet]
-        //public IActionResult AddThesis()
-        //{
-        //    _student = _repository.GetStudent((int)TempData["studentID"]);
-        //    TempData["studentID"] = _student.ID;
-        //    if (ModelState.IsValid)
-        //    {
-        //        StudentAddThesisViewModel model = new StudentAddThesisViewModel();
-        //        Thesis thesis = _repository.GetStudentThesis(_student);
-        //        model.Thesis = thesis;
+        [HttpPost]
+        public async Task<IActionResult> SubmitThesis(SubmitThesisViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
 
-        //        model.StudentName = _student.Name + " " + _student.Surname;
+            var thesis = _repository.Theses.Where(t => t.Id == model.Id).FirstOrDefault();
 
-        //        Teacher promoter = _repository.GetTeacher(thesis.PromoterID);
-        //        model.PromoterName = promoter.Name + " " + promoter.Surname;
+            if (thesis == null)
+            {
+                ViewBag.ErrorMessage = $"Thesis with ID = {model.Id} was not found";
+                return View("NotFound");
+            }
 
-        //        Teacher reviewer = _repository.GetTeacher(thesis.ReviewerID);
-        //        model.RevieverName = reviewer.Name + " " + reviewer.Surname;
+            try
+            {
+                foreach (var file in model.Files)
+                {
+                    string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    string filePath = Path.Combine(_uploadFolder, fileName);
+                    file.CopyTo(new FileStream(filePath, FileMode.Create));
 
-        //        TempData["thesis_id"] = thesis.ID;
-        //        return View(model);
-        //    }
-        //    return RedirectToAction("index", "student", new { id = _student.ID });
-        //}
+                    _repository.Add(new Data.Models.File() { FileName = fileName, UploadDate = DateTime.Now });
 
-        //[HttpPost]
-        //public IActionResult AddThesis(StudentAddThesisViewModel model)
-        //{
-        //    _student = _repository.GetStudent((int)TempData["studentID"]);
-        //    TempData["studentID"] = _student.ID;
-        //    model.Thesis = _repository.GetThesis((int)TempData["thesis_id"]);
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (model.File != null)
-        //        {
-        //            string uploadFolder = Path.Combine(_hostingEnvironment1.ContentRootPath, "wwwroot", "files");
-        //            string fileName = Guid.NewGuid().ToString() + "_" + model.File.FileName;
-        //            string filePath = Path.Combine(uploadFolder, fileName);
-        //            model.File.CopyTo(new FileStream(filePath, FileMode.Create));
+                    var fileId = _repository.Files.Where(f => f.FileName == fileName).FirstOrDefault().Id;
 
-        //            Thesis thesis = _repository.GetStudentThesis(_student);
-        //            thesis.FileName = fileName;
+                    _repository.Add(new ThesisFile() { ThesisId = thesis.Id, FileId = fileId });
+                }
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Could not save changes for the specified thesis");
 
-        //            if (model.Attachments != null)
-        //            {
-        //                List<string> names = thesis.AttachmentsName ?? new List<string>();
-        //                uploadFolder = Path.Combine(_hostingEnvironment1.ContentRootPath, "wwwroot", "files");
-        //                foreach (IFormFile attachment in model.Attachments)
-        //                {
-        //                    if (!names.Any(n => n.Contains(attachment.FileName)))
-        //                    {
-        //                        fileName = Guid.NewGuid().ToString() + "_" + attachment.FileName;
-        //                        filePath = Path.Combine(uploadFolder, fileName);
-        //                        attachment.CopyTo(new FileStream(filePath, FileMode.Create));
-        //                        names.Add(fileName);
-        //                    }
-        //                }
-        //                thesis.AttachmentsName = names;
-        //            }
-        //            thesis.IsUploaded = true;
-        //            _repository.UpdateThesis(thesis);
-        //        }
-        //        return RedirectToAction("index", "student", new { id = _student.ID });
-        //    }
-        //    return View();
-        //}
-        //#endregion
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Student");
+        }
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -5,7 +5,6 @@ namespace WD.Web.ViewModels
 {
     public class AddFinalNoteViewModel
     {
-        public int Id { get; set; }
         public int CourseId { get; set; }
         public string Course { get; set; }
         public string StudentId { get; set; }

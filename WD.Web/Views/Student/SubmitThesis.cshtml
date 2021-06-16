@@ -1,0 +1,73 @@
+﻿@model SubmitThesisViewModel
+@{
+    ViewData["Title"] = "AGH VD | Submit Thesis";
+}
+
+<h3>Submit Thesis:</h3>
+<h6 class="text-danger">Only files with these extensions will be accepted: .pdf, .txt, .doc, .docx, .xls, .xlsx.</h6>
+
+<form enctype="multipart/form-data" method="post">
+    <div class="form-group row">
+        <label asp-for="Title" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Title" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Student" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Student" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Promoter" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Promoter" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Reviever" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Reviever" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Files" class="col-sm-2 col-form-label">Thesis files:</label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input asp-for="Files" class="form-control custom-file-input" accept=".xls,.xlsx,.doc,.docx,.pdf,.txt" multiple />
+                <label class="custom-file-label">Select files</label>
+            </div>
+        </div>
+    </div>
+    <div class="custom-checkbox">
+        <input type="checkbox" required />
+        <label class="text-dark text-capitalize">
+            I declare that I have done the work on my own and that I am criminally liable if plagiarism is detected
+        </label>
+    </div>
+    <div class="form-group align-self-center">
+        <input type="submit" name="submit" class="btn btn-success" value="Submit" />
+        <a asp-controller="Student" asp-action="Index" class="btn btn-dark">Cancel</a>
+    </div>
+
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileLabel = $(this).next('.custom-file-label');
+                    var files = $(this)[0].files;
+                    if (files.length > 1 && files.length < 5) {
+                        fileLabel.html('Wybrano ' + files.length + ' pliki');
+                    }
+                    else if (files.length >= 5) {
+                        fileLabel.html('Wybrano ' + files.length + ' plików');
+                    }
+                    else if (files.length == 1) {
+                        fileLabel.html(files[0].name);
+                    }
+                });
+            });
+        </script>
+    }
+</form>
