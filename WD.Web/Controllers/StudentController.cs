@@ -120,22 +120,25 @@ namespace WD.Web.Controllers
                 return View("NotFound");
             }
 
-            try
+            foreach (var file in model.Files)
             {
-                foreach (var file in model.Files)
-                {
-                    string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                    string filePath = Path.Combine(_uploadFolder, fileName);
-                    file.CopyTo(new FileStream(filePath, FileMode.Create));
+                string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                string filePath = Path.Combine(_uploadFolder, fileName);
+                file.CopyTo(new FileStream(filePath, FileMode.Create));
 
-                    _repository.Add(new Data.Models.File() { FileName = fileName, UploadDate = DateTime.Now });
+                _repository.Add(new Data.Models.File() { FileName = fileName, UploadDate = DateTime.Now });
 
-                    var fileId = _repository.Files.Where(f => f.FileName == fileName).FirstOrDefault().Id;
+                var fileId = _repository.Files.Where(f => f.FileName == fileName).FirstOrDefault().Id;
 
-                    _repository.Add(new ThesisFile() { ThesisId = thesis.Id, FileId = fileId });
-                }
+                _repository.Add(new ThesisFile() { ThesisId = thesis.Id, FileId = fileId });
             }
-            catch (Exception)
+
+            thesis.IsSubmitted = true;
+            thesis.SubmissionDate = DateTime.Now;
+
+            var result = _repository.Update(thesis);
+
+            if (result != null)
             {
                 ModelState.AddModelError("", "Could not save changes for the specified thesis");
 

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WD.Data.Models;
@@ -114,7 +115,8 @@ namespace WD.Web.Controllers
             TeacherViewModel model = new TeacherViewModel()
             {
                 Courses = courseProjects,
-                Theses = _repository.Theses.Where(t => t.PromoterId == teacher.Id || t.ReviewerId == teacher.Id),
+                PromotedTheses = _repository.Theses.Where(t => t.PromoterId == teacher.Id),
+                ReviewedTheses = _repository.Theses.Where(t => t.ReviewerId == teacher.Id),
                 Finals = finals
             };
 
@@ -165,13 +167,18 @@ namespace WD.Web.Controllers
                     Title = model.Title,
                     CreationDate = DateTime.Now,
                     Goal = model.Goal,
-                    IsTaken = model.SelectedStudent != null,
                     ReviewerId = model.SelectedReviewer,
                     Scope = model.Scope,
                     StudentQualifications = model.StudentQualifications,
-                    StudentId = model.SelectedStudent,
                     PromoterId = user.Id
                 };
+
+                if (model.SelectedStudent != null)
+                {
+                    thesis.StudentId = model.SelectedStudent;
+                    thesis.IsTaken = true;
+                    thesis.TakeDate = DateTime.Now;
+                }
 
                 var result = _repository.Add(thesis);
 
@@ -247,12 +254,17 @@ namespace WD.Web.Controllers
             {
                 thesis.Title = model.Title;
                 thesis.Goal = model.Goal;
-                thesis.IsTaken = model.SelectedStudent != null;
                 thesis.ReviewerId = model.SelectedReviewer;
                 thesis.Scope = model.Scope;
                 thesis.StudentQualifications = model.StudentQualifications;
                 thesis.StudentId = model.SelectedStudent;
                 thesis.PromoterId = user.Id;
+
+                if (model.SelectedStudent != null)
+                {
+                    thesis.IsTaken = true;
+                    thesis.TakeDate = DateTime.Now;
+                }
 
                 var result = _repository.Update(thesis);
 
@@ -261,6 +273,77 @@ namespace WD.Web.Controllers
 
                 ModelState.AddModelError("", "Could not save changes for the specified thesis");
             }
+
+            return View(model);
+        }
+        #endregion
+
+        #region Review Thesis
+        [HttpGet]
+        public async Task<IActionResult> ReviewThesis(int id)
+        {
+            var thesis = _repository.Theses.Where(c => c.Id == id).FirstOrDefault();
+
+            if (thesis == null)
+            {
+                ViewBag.ErrorMessage = $"Thesis with ID = {id} was not found";
+                return View("NotFound");
+            }
+
+            var student = await _userManager.FindByIdAsync(thesis.StudentId);
+            var promoter = await _userManager.FindByIdAsync(thesis.PromoterId);
+            var reviewer = await _userManager.FindByIdAsync(thesis.ReviewerId);
+
+            var fileIds = _repository.ThesisFiles.Where(tf => tf.ThesisId == thesis.Id).Select(tf => tf.FileId);
+            var filenames = _repository.Files.Where(f => fileIds.Contains(f.Id)).Select(f => f.FileName);
+
+            var model = new ReviewThesisViewModel()
+            {
+                Student = student.UserName,
+                Promoter = promoter.UserName,
+                Reviewer = reviewer.UserName,
+                Title = thesis.Title,
+                Id = thesis.Id,
+                Files = filenames
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReviewThesis(ReviewThesisViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            var thesis = _repository.Theses.Where(c => c.Id == model.Id).FirstOrDefault();
+
+            if (thesis == null)
+            {
+                ViewBag.ErrorMessage = $"Thesis with ID = {model.Id} was not found";
+                return View("NotFound");
+            }
+
+            if (thesis.PromoterId == user.Id)
+            {
+                thesis.PromoterNote = model.Note;
+                thesis.PromoterOpinion = model.Review;
+                thesis.AcceptationDate = DateTime.Now;
+                thesis.IsAccepted = true;
+            }
+            else if (thesis.ReviewerId == user.Id)
+            {
+                thesis.ReviewerNote = model.Note;
+                thesis.Review = model.Review;
+                thesis.ReviewDate = DateTime.Now;
+                thesis.IsReviewed = true;
+            }
+
+            var result = _repository.Update(thesis);
+
+            if (result != null)
+                return RedirectToAction("Index", "Teacher");
+
+            ModelState.AddModelError("", "Could not save changes for the specified thesis");
 
             return View(model);
         }
@@ -336,6 +419,51 @@ namespace WD.Web.Controllers
             ModelState.AddModelError("", "Could not add final note for specified course/student");
 
             return View(model);
+        }
+        #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> Download(string filename)
+        {
+            if (filename == null)
+                return Content("Filename not present");
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "files", filename);
+
+            var memory = new MemoryStream();
+
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, GetContentType(path), Path.GetFileName(path));
+        }
+
+        #region Methods
+        private string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt","text/plain" },
+                {".pdf","application/pdf" },
+                {".doc","application/vnd.ms-word" },
+                {".docx","application/vnd.ms-word" },
+                {".xls","application/vnd.ms-excel" },
+                {".xlsx","application/vnd.openxmlformats officedocument.spreadsheetml.sheet" },
+                {".png","image/png" },
+                {".jpg","image/jpeg" },
+                {".jpeg","image/jpeg" },
+                {".gif","image/gif" },
+                {".csv","text/csv" }
+            };
         }
         #endregion
     }

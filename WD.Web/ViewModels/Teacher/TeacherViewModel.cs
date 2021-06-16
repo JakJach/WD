@@ -8,6 +8,7 @@ namespace WD.Web.ViewModels
     {
         public IEnumerable<CourseProjectsList> Courses { get; set; }
         public IEnumerable<TeacherCourseFinal> Finals { get; set; }
-        public IEnumerable<Thesis> Theses { get; set; }
+        public IEnumerable<Thesis> PromotedTheses { get; set; }
+        public IEnumerable<Thesis> ReviewedTheses { get; set; }
     }
 }

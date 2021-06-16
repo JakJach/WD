@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WD.Web", "WD.Web\WD.Web.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WD.Data", "WD.Data\WD.Data.csproj", "{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WD.Web.Tests", "WD.Web.Tests\WD.Web.Tests.csproj", "{051444AE-CC87-48FF-8636-A5E7FECCAE38}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E84AA1E5-75FF-4F5B-9D8A-E26433FD96EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{051444AE-CC87-48FF-8636-A5E7FECCAE38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{051444AE-CC87-48FF-8636-A5E7FECCAE38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{051444AE-CC87-48FF-8636-A5E7FECCAE38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{051444AE-CC87-48FF-8636-A5E7FECCAE38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
